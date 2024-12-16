@@ -23,7 +23,7 @@
               <div class="right-top">
                 <div class="loginmax">
                   <div class="loginname">
-                    <button class="loginbutton">ВОЙТИ</button>
+                    <button @click="togglePopup" class="loginbutton">ВОЙТИ</button>
                   </div>
                 </div>
                 <button @click="toggleTheme" class="change-color">
@@ -35,10 +35,6 @@
                     <img :src="languageFlag" alt="ru-us" class="ru-us">
                     <img src="/img/arrow.svg" alt="flag" class="flag">
                   </div>
-                  <!-- <button @click="toggleLanguageList" class="language-toggle">
-                    <img src="/img/ru.svg" alt="ru-us" class="ru-us">
-                    <img src="/img/arrow.svg" alt="flag" class="flag">
-                  </button> -->
                   <div class="list-ru-us" :class="{'show': showLanguageList}">
                     <div @click="selectLanguage('ru')" class="list-ru" :class="{'active': selectedLanguage === 'ru'}">
                       <img src="/img/ru.svg" alt="ru" />
@@ -92,6 +88,27 @@
             </div>
           </div>
         </div>
+        <div v-if="showPopup" class="overlay">
+          <div class="overlay-max">
+            <div class="overlay-max1">
+              <button class="overlay-close">
+                <img src="/img/close.DslCkta_.png" class="close" alt="close">
+              </button>
+              <h2 class="overlay-name">Войти</h2>
+              <p class="overlay-text"></p>
+              <div class="overlay-div">
+                <p class="overlay-text">Мнемоника</p>
+                <input type="text" v-model="mnemonic" class="overlay-input" >
+                <span class="overlay-span" v-if="showError">* - обязательные поля</span>
+              </div>
+              <button type="button" @click="handleSubmit" class="overlay-button" style="margin-top: 50px;">Войти</button>
+              <div class="overlay-footer">
+                <p style=" margin: 0;">У вас нет учетной записи?</p>
+                <button>Зарегистрируйтесь!</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   </div>
@@ -103,7 +120,9 @@ export default {
       isDarkTheme: true,
       showLanguageList: false, 
       selectedLanguage: 'ru',  
-
+      showPopup: false,
+      mnemonic: '',
+      showError: false,
     };
   },
   computed: {
@@ -122,20 +141,180 @@ export default {
       this.showLanguageList = !this.showLanguageList;  
     },
     selectLanguage(language) {
-      this.selectedLanguage = language; // set the selected language
-      this.showLanguageList = false; // hide the language list after selection
+      this.selectedLanguage = language; 
+      this.showLanguageList = false; 
+    },
+    togglePopup() {
+      this.showPopup = !this.showPopup; 
+    },
+    handleSubmit() {
+      // Check if mnemonic input is empty
+      if (this.mnemonic === '') {
+        this.showError = true;  // Show error message
+      } else {
+        this.showError = false;  // Hide error message
+        // Proceed with your login functionality here
+      }
     },
   },
 };
 </script>
 
 <style scoped>
+.overlay-input{
+  border-radius: 10px;
+  background: #ffffff1a;
+    border: none;
+    border-radius: 16px;
+    color: #d0d0d0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    padding: 15px 20px;
+    width: 85%;
+    font: inherit;
+}
+.overlay-footer button{
+  cursor: pointer;
+  all: unset;
+    color: #fefefe;
+    cursor: pointer;
+    font-weight: 600;
+}
+.overlay-footer{
+  align-items: center;
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    gap: 5px;
+    justify-content: center;
+    line-height: normal;
+    margin-top: 24px;
+    text-align: center;
+}
+.overlay-button{
+  background: linear-gradient(96deg, #fb1560cc, #4a1690 87%);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 35px #0003;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-family: Golos, sans-serif;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 500;
+    justify-content: center;
+    line-height: normal;
+    padding: 16px 90px;
+    text-align: center;
+    width: 100%;
+}
+.overlay-span{
+  color: #e01414;
+  padding-bottom: 10px;
+}
+.overlay-text{
+    color: #d0d0d0 !important;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+}
+.overlay-div{
+  gap: 7px;
+  display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
+.overlay-text{
+  color: #e01414;
+  /* padding-bottom: 10px; */
+}
+.overlay-name{
+    color: #fefefe;
+    font-size: 40px;
+    font-weight: 900;
+    line-height: normal;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.close{
+  display: block;
+  width: 100%;
+}
+.overlay-close{
+  background: transparent;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    height: 30px;
+    margin-left: auto;
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    width: 30px;
+    cursor: pointer;
+    font: inherit;
+}
+.overlay-max{
+  display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+.overlay-max1{
+  position: relative;
+  background: #1a1825;
+    border-radius: 30px;
+    box-shadow: 0 0 35px #00000026;
+    padding: 60px 2rem;
+}
+.overlay {
+  align-items: center;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: #000;
+    background-color: #0006;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 50%;
+    overflow: auto;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    z-index: 9999;
+}
+
+
+.list-ru img{
+  margin-top: -20px;
+}
 .list-ru.active {
-  background-color: #4d4d4d; /* Change to your desired active background color */
+  background-color: #4d4d4d;
+  position: relative; 
+}
+
+.list-ru.active::before {
+  content: ""; 
+  /* position: absolute; */
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%); 
+  background: #fff; 
+  width: 4px;
+  height: 10px;
+  border-radius: 12px; 
+}
+
+.list-ru.active {
+  background-color: #4d4d4d; 
 }
 
 .max-ru-us.active img {
-  transform: rotate(180deg);  /* Optional: Flip the arrow when the list is shown */
+  transform: rotate(180deg);  
 }
 .ru-us-name{
   margin-top: -3px;
@@ -154,6 +333,7 @@ export default {
     border-radius: 11px;
     flex-direction: column;
     gap: 10px;
+    margin-top: -400px;
     justify-content: flex-start;
     padding: 20px;
     position: absolute;
@@ -162,6 +342,9 @@ export default {
     width: -moz-max-content;
     width: max-content;
     z-index: 1111;
+}
+.light-theme .list-ru-us{
+  background: #fff;
 }
 .list-ru-us.show {
   display: flex;  
@@ -425,11 +608,17 @@ a, button{
         padding-left: 16px;
         padding-right: 16px;
     }
+    .overlay-max1{
+      padding: 130px 152px;
+    }
 }
 @media screen and (min-width: 744px) {
   .loginmax, .loginbutton{
     display: block;
   }
+  .overlay-max1{
+      padding: 130px 77px;
+    }
   .change-color{
     position: static;
     transform: none;
