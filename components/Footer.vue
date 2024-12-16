@@ -3,8 +3,8 @@
     <div class="max">
       <div class="left-info">
         <div class="left">
-          <img src="/img/1709886192logo_ci_color.svg" alt="logo">
-          <span>Cryptoinfo - независимая обзорная платформа всей криптоиндустрии.</span>
+          <img :src="logo" alt="logo" style="width: 70%;">
+          <span>{{ footerText }}</span>
         </div>
         <div class="info">
           <div class="info-name">Связаться с нами</div>
@@ -15,7 +15,7 @@
           </div>
           <div class="email-tg">
             <img src="/img/tg-icon.svg" alt="tg">
-            <span>cryptoinfo_me</span>
+            <span>{{ infoHeader }}</span>
           </div>
         </div>
       </div>
@@ -30,6 +30,42 @@
     </div>
   </footer>
 </template>
+
+<script>
+import { getSettings } from "@/services/crypto.js";
+
+export default {
+  data() {
+    return {
+      infoHeader: "", 
+      footerText: "",
+      logo: "",
+      selectedLanguage: "ru",
+    };
+  },
+  mounted() {
+    this.fetchSettings();
+  },
+  
+  methods: {
+    async fetchSettings() {
+      const settings = await getSettings();
+      if (settings) {
+        this.infoHeader = settings.info_header_en; 
+        this.footerText = this.selectedLanguage === 'en' ?
+          settings.info_footer_en : settings.info_footer_ru; 
+        this.logo = settings.logo; 
+
+      }
+    },
+  },
+  // watch: {
+  //   selectedLanguage(newLanguage) {
+  //     this.fetchSettings();  
+  //   }
+  // }
+};
+</script>
 
 <style scoped>
 footer{
