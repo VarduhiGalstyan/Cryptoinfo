@@ -10,20 +10,19 @@
           </div>
           <div class="centron-right">
             <div class="top-a">
-              <a href="https://cryptoinfo.me/"  title="target">ГЛАВНАЯ</a>
-              <a href="https://cryptoinfo.me/services" title="target">БИРЖИ</a>
-              <a href="https://cryptoinfo.me/exchanges"  title="target">ОБМЕННИКИ</a>
-              <a href="https://cryptoinfo.me/miners"  title="target">МАЙНЕРЫ</a>
-              <a href="https://cryptoinfo.me/storages"  title="target">ХРАНЕНИЕ</a>
-              <a href="file:///C:/Users/LENOVO/Desktop/Project/project35.html" title="target">FAQ</a>
-              <a href="https://cryptoinfo.me/about-us"  title="target">О НАС</a>
-              <a href="https://cryptoinfo.me/contacts" class="home2" title="target">КОНТАКТЫ</a>
+              <a href="https://cryptoinfo.me/">{{ currentMessages.home }}</a>
+              <a href="https://cryptoinfo.me/services">{{ currentMessages.exchanges }}</a>
+              <a href="https://cryptoinfo.me/exchanges">{{ currentMessages.miners }}</a>
+              <a href="https://cryptoinfo.me/miners">{{ currentMessages.storage }}</a>
+              <a href="file:///C:/Users/LENOVO/Desktop/Project/project35.html">{{ currentMessages.faq }}</a>
+              <a href="https://cryptoinfo.me/about-us">{{ currentMessages.aboutUs }}</a>
+              <a href="https://cryptoinfo.me/contacts" class="home2">{{ currentMessages.contacts }}</a>
             </div>
             <div class="top-right">
               <div class="right-top">
                 <div class="loginmax">
                   <div class="loginname">
-                    <button @click="togglePopup" class="loginbutton">ВОЙТИ</button>
+                    <button @click="togglePopup" class="loginbutton">{{ currentMessages.enter }}</button>
                   </div>
                 </div>
                 <button @click="toggleTheme" class="change-color">
@@ -48,7 +47,7 @@
                 </div>
               </div>
               <div class="right-bottom">
-                <a href="https://t.me/cryptoinfo_me">Наш ТГ канал</a>
+                <a href="https://t.me/cryptoinfo_me">{{ currentMessages.tgChannel }}</a>
                 <img src="/img/tg_logo.webp" alt="tg-logo"  class="tg-logo">
               </div>
             </div>
@@ -91,20 +90,22 @@
         <div v-if="showPopup" class="overlay">
           <div class="overlay-max">
             <div class="overlay-max1">
-              <button class="overlay-close">
+              <button class="overlay-close" @click="closePopup">
                 <img src="/img/close.DslCkta_.png" class="close" alt="close">
               </button>
-              <h2 class="overlay-name">Войти</h2>
+              <h2 class="overlay-name">{{ currentMessages.login }}</h2>
               <p class="overlay-text"></p>
               <div class="overlay-div">
-                <p class="overlay-text">Мнемоника</p>
+                <p class="overlay-text">{{ currentMessages.enterMnemonic }}</p>
                 <input type="text" v-model="mnemonic" class="overlay-input" >
-                <span class="overlay-span" v-if="showError">* - обязательные поля</span>
+                <span class="overlay-span" v-if="showError">{{ currentMessages.fields }}</span>
               </div>
-              <button type="button" @click="handleSubmit" class="overlay-button" style="margin-top: 50px;">Войти</button>
+              <button type="button" @click="handleSubmit" class="overlay-button" style="margin-top: 50px;">
+                {{ currentMessages.login }}
+              </button>
               <div class="overlay-footer">
-                <p style=" margin: 0;">У вас нет учетной записи?</p>
-                <button>Зарегистрируйтесь!</button>
+                <p style=" margin: 0;">{{ currentMessages.overlayfooter }}</p>
+                <button>{{currentMessages.end}}</button>
               </div>
             </div>
           </div>
@@ -123,6 +124,40 @@ export default {
       showPopup: false,
       mnemonic: '',
       showError: false,
+      messages: {
+        ru: {
+          home: 'ГЛАВНАЯ',
+          exchanges: 'БИРЖИ',
+          miners: 'МАЙНЕРЫ',
+          storage: 'ХРАНЕНИЕ',
+          faq: 'FAQ',
+          aboutUs: 'О НАС',
+          contacts: 'КОНТАКТЫ',
+          tgChannel: 'Наш ТГ канал',
+          enter: 'ВОЙТИ',
+          login: 'Войти',
+          enterMnemonic: 'Мнемоника',
+          fields: '* - обязательные поля',
+          overlayfooter: 'У вас нет учетной записи?',
+          end: 'Зарегистрируйтесь!',
+        },
+        en: {
+          home: 'HOME',
+          exchanges: 'EXCHANGES',
+          miners: 'MINERS',
+          storage: 'STORAGE',
+          faq: 'FAQ',
+          aboutUs: 'ABOUT US',
+          contacts: 'CONTACTS',
+          tgChannel: 'Our TG Channel',
+          enter: 'LOGIN',
+          login: 'Sign In',
+          enterMnemonic: 'Mnemonic',
+          fields: '* - required fields',
+          overlayfooter: 'Do not have an account?',
+          end: 'Register!',
+        }
+      }
     };
   },
   computed: {
@@ -130,8 +165,11 @@ export default {
       return this.isDarkTheme ? 'dark-theme' : 'light-theme';
     },
     languageFlag() {
-      return this.selectedLanguage === 'ru' ? '/img/ru.svg' : '/img/us.svg'; // dynamically set the flag image
-    }
+      return this.selectedLanguage === 'ru' ? '/img/ru.svg' : '/img/us.svg'; 
+    },
+    currentMessages() {
+      return this.messages[this.selectedLanguage];
+    },
   },
   methods: {
     toggleTheme() {
@@ -147,13 +185,14 @@ export default {
     togglePopup() {
       this.showPopup = !this.showPopup; 
     },
+    closePopup() {
+      this.showPopup = false; 
+    },
     handleSubmit() {
-      // Check if mnemonic input is empty
       if (this.mnemonic === '') {
-        this.showError = true;  // Show error message
+        this.showError = true; 
       } else {
-        this.showError = false;  // Hide error message
-        // Proceed with your login functionality here
+        this.showError = false;
       }
     },
   },
@@ -211,7 +250,7 @@ export default {
     width: 100%;
 }
 .overlay-span{
-  color: #e01414;
+  color: #e01414 !important;
   padding-bottom: 10px;
 }
 .overlay-text{
