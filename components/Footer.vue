@@ -35,12 +35,14 @@
 import { getSettings } from "@/services/crypto.js";
 
 export default {
+  props: {
+    selectedLanguage: "en"
+  },
   data() {
     return {
       infoHeader: "", 
       footerText: "",
       logo: "",
-      selectedLanguage: "ru",
     };
   },
   mounted() {
@@ -58,12 +60,7 @@ export default {
 
       }
     },
-  },
-  // watch: {
-  //   selectedLanguage(newLanguage) {
-  //     this.fetchSettings();  
-  //   }
-  // }
+  }
 };
 </script>
 

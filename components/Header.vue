@@ -143,10 +143,14 @@
       </div>
     </header>
   </div>
+  <div>
+    <footer-component :selectedLanguage="selectedLanguage"></footer-component>
+  </div>
 </template>
 
 <script>
 import { getSettings } from "@/services/crypto.js";
+import FooterComponent from "@/components/Footer.vue"; 
 
 export default {
   data() {
@@ -197,6 +201,7 @@ export default {
     };
   },
   computed: {
+    FooterComponent,
     themeClass() {
       return this.isDarkTheme ? "dark-theme" : "light-theme";
     },
