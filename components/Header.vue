@@ -1,20 +1,21 @@
-<template>
+nuxt, <template>
   <div class="header" :class="themeClass">
     <header>
       <div class="max">
         <div class="max-top">
           <div class="top-img">
             <a href="https://cryptoinfo.me/">
-              <img src="/img/1709886192logo_ci_color.svg" alt="logo-crypto">
+              <img :src="logoUrl" alt="logo-crypto" style="width: 84%;">
             </a>
           </div>
           <div class="centron-right">
             <div class="top-a">
               <a href="https://cryptoinfo.me/">{{ currentMessages.home }}</a>
-              <a href="https://cryptoinfo.me/services">{{ currentMessages.exchanges }}</a>
-              <a href="https://cryptoinfo.me/exchanges">{{ currentMessages.miners }}</a>
-              <a href="https://cryptoinfo.me/miners">{{ currentMessages.storage }}</a>
-              <a href="file:///C:/Users/LENOVO/Desktop/Project/project35.html">{{ currentMessages.faq }}</a>
+              <a href="https://cryptoinfo.me/services">{{ currentMessages.services }}</a>
+              <a href="https://cryptoinfo.me/exchanges">{{ currentMessages.exchanges }}</a>
+              <a href="https://cryptoinfo.me/miners">{{ currentMessages.miners }}</a>
+              <a href="https://cryptoinfo.me/storages">{{ currentMessages.storage }}</a>
+              <a href="https://cryptoinfo.me/faq">{{ currentMessages.faq }}</a>
               <a href="https://cryptoinfo.me/about-us">{{ currentMessages.aboutUs }}</a>
               <a href="https://cryptoinfo.me/contacts" class="home2">{{ currentMessages.contacts }}</a>
             </div>
@@ -114,7 +115,10 @@
     </header>
   </div>
 </template>
+
 <script>
+import { getSettings } from '@/services/crypto.js';
+
 export default {
   data() {
     return {
@@ -127,7 +131,7 @@ export default {
       messages: {
         ru: {
           home: 'ГЛАВНАЯ',
-          exchanges: 'БИРЖИ',
+          exchanges: 'Обменники',
           miners: 'МАЙНЕРЫ',
           storage: 'ХРАНЕНИЕ',
           faq: 'FAQ',
@@ -149,7 +153,7 @@ export default {
           faq: 'FAQ',
           aboutUs: 'ABOUT US',
           contacts: 'CONTACTS',
-          tgChannel: 'Our TG Channel',
+          tgChannel: 'JOIN to',
           enter: 'LOGIN',
           login: 'Sign In',
           enterMnemonic: 'Mnemonic',
@@ -157,7 +161,9 @@ export default {
           overlayfooter: 'Do not have an account?',
           end: 'Register!',
         }
-      }
+      },
+      logoUrl: '',
+      
     };
   },
   computed: {
@@ -171,7 +177,16 @@ export default {
       return this.messages[this.selectedLanguage];
     },
   },
+  mounted() {
+    this.fetchLogo(); 
+  },
   methods: {
+    async fetchLogo() {
+      const settings = await getSettings();
+      if (settings) {
+        this.logoUrl = settings.logo;  
+      }
+    },
     toggleTheme() {
       this.isDarkTheme = !this.isDarkTheme;
     },
@@ -332,7 +347,7 @@ export default {
   margin-top: -20px;
 }
 .list-ru.active {
-  background-color: #4d4d4d;
+  /* background-color: #4d4d4d; */
   position: relative; 
 }
 
@@ -348,10 +363,6 @@ export default {
   border-radius: 12px; 
 }
 
-.list-ru.active {
-  background-color: #4d4d4d; 
-}
-
 .max-ru-us.active img {
   transform: rotate(180deg);  
 }
@@ -365,6 +376,9 @@ export default {
   color: #fff;
   margin: 0;
 }
+.light-theme .list-ru-us{
+  margin-top: -510px;
+}
 .list-ru-us{
   display: none;
   align-items: flex-start;
@@ -372,7 +386,7 @@ export default {
     border-radius: 11px;
     flex-direction: column;
     gap: 10px;
-    margin-top: -400px;
+    margin-top: -400px ;
     justify-content: flex-start;
     padding: 20px;
     position: absolute;
@@ -383,7 +397,13 @@ export default {
     z-index: 1111;
 }
 .light-theme .list-ru-us{
+  margin-left: -400px;
+}
+.light-theme .list-ru-us{
   background: #fff;
+}
+.light-theme .ru-us-name{
+  color: #000;
 }
 .list-ru-us.show {
   display: flex;  
@@ -470,6 +490,7 @@ button{
   flex-direction: column;
   gap: 40px;
   padding-top: 7%;
+  padding-left: 29%;
   width: 92.5%;
 }
 .buttons{
@@ -570,6 +591,7 @@ button{
   display: flex;
 }
 .top-img{
+  width: 17%;
   margin-top: 18px;
 }
 .centron-right{
