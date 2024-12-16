@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" :class="themeClass">
     <header>
       <div class="max">
         <div class="max-top">
@@ -21,11 +21,34 @@
             </div>
             <div class="top-right">
               <div class="right-top">
-                <a href="#" >ВОЙТИ</a>
-                <img src="/img/theme-dark.svg" alt="theme" class="theme">
-                <div class="max-ru-us">
-                  <img src="/img/ru.svg" alt="ru-us" class="ru-us">
-                  <img src="/img/arrow.svg" alt="flag" class="flag">
+                <div class="loginmax">
+                  <div class="loginname">
+                    <button class="loginbutton">ВОЙТИ</button>
+                  </div>
+                </div>
+                <button @click="toggleTheme" class="change-color">
+                  <img  v-if="isDarkTheme" src="/img/theme-dark.svg" alt="theme-dark" class="theme">
+                  <img v-else src="/img/theme-light.svg" alt="theme-light" class="theme">
+                </button>
+                <div>
+                  <div @click="toggleLanguageList" class="max-ru-us" >
+                    <img :src="languageFlag" alt="ru-us" class="ru-us">
+                    <img src="/img/arrow.svg" alt="flag" class="flag">
+                  </div>
+                  <!-- <button @click="toggleLanguageList" class="language-toggle">
+                    <img src="/img/ru.svg" alt="ru-us" class="ru-us">
+                    <img src="/img/arrow.svg" alt="flag" class="flag">
+                  </button> -->
+                  <div class="list-ru-us" :class="{'show': showLanguageList}">
+                    <div @click="selectLanguage('ru')" class="list-ru" :class="{'active': selectedLanguage === 'ru'}">
+                      <img src="/img/ru.svg" alt="ru" />
+                      <p class="ru-us-name">Русский</p>
+                    </div>
+                    <div @click="selectLanguage('en')" class="list-ru" :class="{'active': selectedLanguage === 'en'}">
+                      <img src="/img/us.svg" alt="us" />
+                      <p class="ru-us-name">English</p>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="right-bottom">
@@ -73,8 +96,108 @@
     </header>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      isDarkTheme: true,
+      showLanguageList: false, 
+      selectedLanguage: 'ru',  
+
+    };
+  },
+  computed: {
+    themeClass() {
+      return this.isDarkTheme ? 'dark-theme' : 'light-theme';
+    },
+    languageFlag() {
+      return this.selectedLanguage === 'ru' ? '/img/ru.svg' : '/img/us.svg'; // dynamically set the flag image
+    }
+  },
+  methods: {
+    toggleTheme() {
+      this.isDarkTheme = !this.isDarkTheme;
+    },
+    toggleLanguageList() {
+      this.showLanguageList = !this.showLanguageList;  
+    },
+    selectLanguage(language) {
+      this.selectedLanguage = language; // set the selected language
+      this.showLanguageList = false; // hide the language list after selection
+    },
+  },
+};
+</script>
 
 <style scoped>
+.list-ru.active {
+  background-color: #4d4d4d; /* Change to your desired active background color */
+}
+
+.max-ru-us.active img {
+  transform: rotate(180deg);  /* Optional: Flip the arrow when the list is shown */
+}
+.ru-us-name{
+  margin-top: -3px;
+
+}
+.list-ru{
+  display: inline-flex;
+  gap: inherit;
+  color: #fff;
+  margin: 0;
+}
+.list-ru-us{
+  display: none;
+  align-items: flex-start;
+    background: #301c44;
+    border-radius: 11px;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    width: -moz-max-content;
+    width: max-content;
+    z-index: 1111;
+}
+.list-ru-us.show {
+  display: flex;  
+}
+.theme{
+  width: 100%;
+  display: block;
+  max-width: 100%;
+}
+.change-color{
+  display: contents;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.loginbutton{
+  background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+}
+button{
+  font: inherit;
+  cursor: pointer;
+}
+.loginmax{
+  cursor: pointer;
+  color: #d0d0d0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
 .info-number{
     color: #d2d2d2;
     font-size: 18px;
@@ -186,11 +309,29 @@
   display: block;
   unicode-bidi: isolate;
 }
-header{
+.dark-theme header {
   background: 
     no-repeat 100% 100% / 65% url(/img/wave-20.webp), 
     no-repeat 50% / cover url(/img/cover.webp);
   position: relative;
+}
+.light-theme header {
+  background-color: #f7f7f7;
+  background: no-repeat 130% 100% / 80% 112% url(/img/bg_arrow.webp), 
+    no-repeat 50% / cover url(/img/home-light-1.webp);
+}
+.light-theme a,button .light-theme  button, .light-theme span{
+  color: #170332;
+}
+.light-theme  .info-number, .light-theme .loginbutton{
+  color: #170332;
+}
+.light-theme .top-a a{
+  background-color: #f7f3f3;
+  height: 18px;
+}
+.light-theme .button1{
+  background-color: #f5f3f3;
 }
 .max{
   padding-top: 40px;
@@ -221,7 +362,7 @@ header{
 .top-a a{
     padding-left: 20px;
 }
-a{
+a, button{
   color: #d0d0d0;
   text-decoration: none;
 
@@ -285,4 +426,13 @@ a{
         padding-right: 16px;
     }
 }
-</style>
+@media screen and (min-width: 744px) {
+  .loginmax, .loginbutton{
+    display: block;
+  }
+  .change-color{
+    position: static;
+    transform: none;
+  }
+}
+</style> 
