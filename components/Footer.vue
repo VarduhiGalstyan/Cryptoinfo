@@ -4,10 +4,10 @@
       <div class="left-info">
         <div class="left">
           <img :src="logo" alt="logo" style="width: 70%;">
-          <span>{{ footerText }}</span>
+          <span>{{ $t('footerText') }}</span>
         </div>
         <div class="info">
-          <div class="info-name">Связаться с нами</div>
+          <div class="info-name">{{ $t('contactUs') }}</div>
           <div class="email-tg">
             <img src="../img/email-icon-512x408-pcaze3fg.png" alt="email-logo">
             <a href="#">crpinfo@proton.me</a>
@@ -23,9 +23,9 @@
       <div class="right">
         <div class="right-top">
           <input type="text" placeholder="сресьрфцтгцйфьцтрфцтгжкф(цгцгх)" >
-          <button> podpuskacia</button>
+          <button> Подписка</button>
         </div>
-        <div class="end">© 2024 Все Права Защищены</div>
+        <div class="end">© 2024 {{ $t('allRightsReserved') }}</div>
       </div>
     </div>
   </footer>
@@ -54,10 +54,8 @@ export default {
       const settings = await getSettings();
       if (settings) {
         this.infoHeader = settings.info_header_en; 
-        this.footerText = this.selectedLanguage === 'en' ?
-          settings.info_footer_en : settings.info_footer_ru; 
+        this.footerText = this.$t('footerText');
         this.logo = settings.logo; 
-
       }
     },
   }
