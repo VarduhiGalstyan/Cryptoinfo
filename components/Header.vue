@@ -5,7 +5,7 @@
         <div class="max-top">
           <div class="top-img">
             <a href="https://cryptoinfo.me/">
-              <img :src="settings.logoUrl" alt="logo-crypto" style="width: 84%" />
+              <img :src="logoUrl" alt="logo-crypto" style="width: 84%" />
             </a>
           </div>
           <div class="centron-right">
@@ -144,90 +144,81 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from "vue";
 import { getSettings } from "@/services/crypto.js";
 import FooterComponent from "@/components/Footer.vue"; 
+import { useRouter } from "vue-router";
 
-export default {
-  data() {
-    return {
-      isDarkTheme: true,
-      showLanguageList: false,
-      selectedLanguage: "ru",
-      showPopup: false,
-      mnemonic: "",
-      showError: false,
-      settings: {
-        ru: {
-        },
-        en: {
-        },
-      },
-      logoUrl: "",
-    };
-  },
-  computed: {
-    FooterComponent,
-    themeClass() {
-      return this.isDarkTheme ? "dark-theme" : "light-theme";
-    },
-    languageFlag() {
-      return this.selectedLanguage === "ru" ? "/img/ru.svg" : "/img/us.svg";
-    },
-    currentMessages() {
-      return this.settings[this.selectedLanguage];
-    },
-  },
-  mounted() {
-    // this.fetchLogo()
-    this.fetchSettings();
-  },
-  methods: {
-    async fetchSettings() {
-      const settings = await getSettings();
-      if (settings) {
-        this.settings.en.services = settings.type1_title_en;
-        this.settings.ru.services=settings.type1_title_ru;
-        this.settings.logoUrl = settings.logo;
-        this.settings.en.exchanges = settings.type2_title_en;
-        this.settings.ru.exchanges = settings.type2_title_ru;
-        this.settings.en.miners = settings.type3_title_en;
-        this.settings.ru.miners = settings.type3_title_ru;
-        this.settings.en.storage = settings.type4_title_en;
-        this.settings.ru.storage = settings.type4_title_ru;
+const isDarkTheme = ref(true);
+const showLanguageList = ref(false);
+const selectedLanguage = ref("ru");
+const showPopup = ref(false);
+const mnemonic = ref("");
+const showError = ref(false);
+const settings = ref({
+  ru: {},
+  en: {},
+});
+const logoUrl = ref("");
 
+const router = useRouter();
 
-      }
-    },
-    toggleTheme() {
-      this.isDarkTheme = !this.isDarkTheme;
-    },
-    toggleLanguageList() {
-      this.showLanguageList = !this.showLanguageList;
-    },
-    selectLanguage(language) {
-      this.selectedLanguage = language;
-      this.showLanguageList = false;
+// Computed properties
+const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
+const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/img/ru.svg" : "/img/us.svg"));
+const currentMessages = computed(() => settings.value[selectedLanguage.value]);
 
-      this.$i18n.locale = language === 'en' ? '/en' : '/';
-      this.$router.push(this.$i18n.locale);
-    },
-    togglePopup() {
-      this.showPopup = !this.showPopup;
-    },
-    closePopup() {
-      this.showPopup = false;
-    },
-    handleSubmit() {
-      if (this.mnemonic === "") {
-        this.showError = true;
-      } else {
-        this.showError = false;
-      }
-    },
-  },
+// Fetch settings when the component is mounted
+onMounted(() => {
+  fetchSettings();
+});
+
+// Methods
+const fetchSettings = async () => {
+  const fetchedSettings = await getSettings();
+  if (fetchedSettings) {
+    settings.value.en.services = fetchedSettings.type1_title_en;
+    settings.value.ru.services = fetchedSettings.type1_title_ru;
+    logoUrl.value = fetchedSettings.logo;
+    settings.value.en.exchanges = fetchedSettings.type2_title_en;
+    settings.value.ru.exchanges = fetchedSettings.type2_title_ru;
+    settings.value.en.miners = fetchedSettings.type3_title_en;
+    settings.value.ru.miners = fetchedSettings.type3_title_ru;
+    settings.value.en.storage = fetchedSettings.type4_title_en;
+    settings.value.ru.storage = fetchedSettings.type4_title_ru;
+  }
+};
+
+const toggleTheme = () => {
+  isDarkTheme.value = !isDarkTheme.value;
+};
+
+const toggleLanguageList = () => {
+  showLanguageList.value = !showLanguageList.value;
+};
+
+const selectLanguage = (language) => {
+  selectedLanguage.value = language;
+  showLanguageList.value = false;
+
+  const locale = language === "en" ? "/en" : "/";
+  router.push(locale);
+};
+
+const togglePopup = () => {
+  showPopup.value = !showPopup.value;
+};
+
+const closePopup = () => {
+  showPopup.value = false;
+};
+
+const handleSubmit = () => {
+  showError.value = mnemonic.value === "";
 };
 </script>
+
 
 <style scoped>
 .overlay-input {
