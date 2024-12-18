@@ -4,36 +4,35 @@
          <div class="cards">
             <div>
                <div class="cards-contain">
-                  <div class="card">
+                  <div class="card" v-for="post in posts" :key="post.id">
                      <div class="card-img-div">
-                        <img src="/img/1733826336.webp" class="card-img" alt="card-img">
+                        <img  :src="'https://api.cryptoinfo.me/uploads/posts/' + post.img"
+                         class="card-img" alt="card-img">
                         <div class="post-info">
                            <div class="column">
-                              <div class="day">10.12.2024</div>
+                              <div class="day">{{ post.date }}</div>
                            </div>
                            <div class="column">
                               <div class="views">
                                  <img style="width: 16px; height: 14px;" src="/img/eye-icon.svg" alt="eye">
-                                 <div class="views-number">2</div>
+                                 <div class="views-number">{{ post.views }}</div>
                               </div>
                            </div>
                         </div>
                      </div>
                      <div class="card-text-button">
                         <div class="text-name">
-                           Эрик Трамп: США рискуют отстать в криптоиндустрии
+                           {{ post.caption }}
                         </div>
                         <div class="text-info">
-                           Эрик Трамп предупреждает, что без четких регуляций криптовалюты США рискуют отстать, а также подчеркивает важность поддержки децентрализованных финансов
+                           {{ post.anons }}
                         </div>
                         <div class="text-buttons">
                            <div class="cisit">
                               <img src="/img/visit-icon.svg" alt="visit-icon" class="visit-icon">
                            </div>
                            <div class="links">
-                              <div class="link">Криптовалюта</div>
-                              <div class="link">Политика</div>
-                              <div class="link">США</div>
+                              <div class="link" v-for="tag in post.tags" :key="tag" > {{ tag }}</div>
                            </div>
                         </div>
                      </div>
@@ -41,7 +40,7 @@
                </div>
             </div>
             <div class="card-button">
-               <button class="max-button">
+               <button class="max-button" @click="loadMorePosts">
                   <span>Больше новостей</span>
                </button>
             </div>
@@ -89,6 +88,53 @@
    </div>
 </template>
   
+    
+    <script>
+    import { onMounted, ref } from "vue";
+    import { useApi } from "@/stores/api";
+    
+    export default {
+      setup() {
+        const posts = ref([]);
+        const page = ref(1); 
+        const myStore = useApi();
+        
+    const loadPosts = async () => {
+      try {
+        await myStore.fetchData3(page.value);  
+        console.log(myStore.myPost);
+        if (myStore.myPost && myStore.myPost.posts) {
+          const newPosts = myStore.myPost.posts.map((post) => ({
+            id: post.id,
+            caption: post.caption_en,
+            img: post.image,
+            altText: "news image",
+            anons: post.anons_en,
+            tags: post.tags_en.split(","),
+            date: post.created_at.split("T")[0].split("-").reverse().join("."),
+            views: post.post_view,
+            link: `/post/${post.id}`,
+          }));
+          posts.value = [...posts.value, ...newPosts];  
+        } else {
+          console.error('Posts are not available!');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    onMounted(loadPosts);
+
+    const loadMorePosts = () => {
+      page.value += 1;  
+      loadPosts();  
+    };
+
+    return { posts, loadMorePosts };
+  },
+};
+</script>
 
 <style scoped>
 .card1-text{

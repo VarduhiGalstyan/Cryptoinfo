@@ -35,7 +35,7 @@
 
 
 <script setup>
-import { getSettings } from "@/services/crypto.js";
+import { getSettings } from "~/stores/api.js";
 const { t, locale } = useI18n(); 
 
 let infoHeader= "";

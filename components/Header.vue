@@ -139,15 +139,11 @@
       </div>
     </header>
   </div>
-  <div>
-    <footer-component :selectedLanguage="selectedLanguage"></footer-component>
-  </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { getSettings } from "@/services/crypto.js";
-import FooterComponent from "@/components/Footer.vue"; 
+import { getSettings } from "~/stores/api.js";
 import { useRouter } from "vue-router";
 
 const isDarkTheme = ref(true);
