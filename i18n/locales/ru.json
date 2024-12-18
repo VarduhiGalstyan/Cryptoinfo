@@ -1,7 +1,20 @@
 {
-    "footerText": "Cryptoinfo - независимая обзорная платформа всей криптоиндустрии.",
+  "home": "ГЛАВНАЯ",
+  "faq": "FAQ",
+  "aboutUs": "О НАС",
+  "contacts": "КОНТАКТЫ",
+  "tgChannel": "Наш ТГ канал",
+  "enter": "ВОЙТИ",
+  "login": "Войти",
+  "enterMnemonic": "Мнемоника",
+  "fields": "* - обязательные поля",
+  "overlayfooter": "У вас нет учетной записи?",
+  "end": "Зарегистрируйтесь!",
+
     "contactUs": "Связаться с нами",
-    "infoHeader": "Наш ТГ канал",
-    "allRightsReserved": "Все права защищены"
+    "allRightsReserved": "Все права защищены",
+    "subscribe": "Подписаться",
+    "placeholder": "Подписка на новости (Введите ваш email)"
+
   }
   

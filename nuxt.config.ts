@@ -35,13 +35,14 @@ export default defineNuxtConfig ({
       },
       {
         code: "en",
-        iso: "en-EN",
+        iso: "en",
         name: "English",
         file: "en.json",
         title: "En",
       },
     ],
     defaultLocale: "ru",
-   
-  }
+    
+    
+  },
 });

@@ -1,65 +1,55 @@
 <template>
   <footer>
-    <div class="max">
-      <div class="left-info">
-        <div class="left">
-          <img :src="logo" alt="logo" style="width: 70%;">
-          <span>{{ $t('footerText') }}</span>
-        </div>
-        <div class="info">
-          <div class="info-name">{{ $t('contactUs') }}</div>
-          <div class="email-tg">
-            <img src="../img/email-icon-512x408-pcaze3fg.png" alt="email-logo">
-            <a href="#">crpinfo@proton.me</a>
-            <p></p>
-          </div>
-          <div class="email-tg">
-            <img src="/img/tg-icon.svg" alt="tg">
-            <span>{{ infoHeader }}</span>
-          </div>
-        </div>
+  <div class="max">
+    <div class="left-info">
+      <div class="left">
+        <img :src="logo" alt="logo" style="width: 70%;">
+        <span>{{footerText}}</span>
       </div>
-     
-      <div class="right">
-        <div class="right-top">
-          <input type="text" placeholder="сресьрфцтгцйфьцтрфцтгжкф(цгцгх)" >
-          <button> Подписка</button>
+      <div class="info">
+        <div class="info-name">{{ $t('contactUs') }}</div>
+        <div class="email-tg">
+          <img src="../img/email-icon-512x408-pcaze3fg.png" alt="email-logo">
+          <a href="#">{{ contact_email }}</a>
+          <p></p>
         </div>
-        <div class="end">© 2024 {{ $t('allRightsReserved') }}</div>
+        <div class="email-tg">
+          <img src="/img/tg-icon.svg" alt="tg">
+          <span>{{ infoHeader }}</span>
+        </div>
       </div>
     </div>
-  </footer>
+    
+    <div class="right">
+      <div class="right-top">
+        <input type="text" 
+        :placeholder="$t('placeholder')"
+        >
+        <button> {{ $t('subscribe') }}</button>
+      </div>
+      <div class="end">© 2024 {{ $t('allRightsReserved') }}</div>
+    </div>
+  </div>
+</footer>
 </template>
 
-<script>
-import { getSettings } from "@/services/crypto.js";
 
-export default {
-  props: {
-    selectedLanguage: "en"
-  },
-  data() {
-    return {
-      infoHeader: "", 
-      footerText: "",
-      logo: "",
-    };
-  },
-  mounted() {
-    this.fetchSettings();
-  },
-  
-  methods: {
-    async fetchSettings() {
-      const settings = await getSettings();
-      if (settings) {
-        this.infoHeader = settings.info_header_en; 
-        this.footerText = this.$t('footerText');
-        this.logo = settings.logo; 
-      }
-    },
-  }
-};
+<script setup>
+import { getSettings } from "@/services/crypto.js";
+const { t, locale } = useI18n(); 
+
+let infoHeader= "";
+let contact_email= "";
+let footerText = "";
+let logo =  "";
+
+const settings = await getSettings();
+if (settings) {
+  infoHeader = settings.info_header_en; 
+  contact_email = settings.contact_email;
+  footerText = locale.value === "ru" ? settings.info_footer_ru : settings.info_footer_en;
+  logo = settings.logo; 
+}
 </script>
 
 <style scoped>

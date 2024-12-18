@@ -10,21 +10,21 @@
           </div>
           <div class="centron-right">
             <div class="top-a">
-              <a href="https://cryptoinfo.me/">{{ currentMessages.home }}</a>
+              <a href="https://cryptoinfo.me/">{{$t( "home" )}}</a>
               <a href="https://cryptoinfo.me/services">{{  currentMessages.services}}</a>
               <a href="https://cryptoinfo.me/exchanges">{{ currentMessages.exchanges }}</a>
               <a href="https://cryptoinfo.me/miners">{{  currentMessages.miners }}</a>
               <a href="https://cryptoinfo.me/storages">{{  currentMessages.storage}}</a>
-              <a href="https://cryptoinfo.me/faq">{{ currentMessages.faq }}</a>
-              <a href="https://cryptoinfo.me/about-us">{{  currentMessages.aboutUs  }}</a>
-              <a href="https://cryptoinfo.me/contacts" class="home2">{{  currentMessages.contacts  }}</a>
+              <a href="https://cryptoinfo.me/faq">{{$t( "faq" )}}</a>
+              <a href="https://cryptoinfo.me/about-us">{{$t( "aboutUs" )}}</a>
+              <a href="https://cryptoinfo.me/contacts" class="home2">{{$t( "contacts" )}}</a>
             </div>
             <div class="top-right">
               <div class="right-top">
                 <div class="loginmax">
                   <div class="loginname">
                     <button @click="togglePopup" class="loginbutton">
-                      {{ currentMessages.enter }}
+                      {{$t( "enter" )}}
                     </button>
                   </div>
                 </div>
@@ -68,9 +68,7 @@
                 </div>
               </div>
               <div class="right-bottom">
-                <a href="https://t.me/cryptoinfo_me">{{
-                  currentMessages.tgChannel
-                }}</a>
+                <a href="https://t.me/cryptoinfo_me"> {{$t( "tgChannel" )}}</a>
                 <img src="/img/tg_logo.webp" alt="tg-logo" class="tg-logo" />
               </div>
             </div>
@@ -116,14 +114,12 @@
               <button class="overlay-close" @click="closePopup">
                 <img src="/img/close.DslCkta_.png" class="close" alt="close" />
               </button>
-              <h2 class="overlay-name">{{ currentMessages.login }}</h2>
+              <h2 class="overlay-name">{{$t( "login" )}}</h2>
               <p class="overlay-text"></p>
               <div class="overlay-div">
-                <p class="overlay-text">{{ currentMessages.enterMnemonic }}</p>
+                <p class="overlay-text">{{$t( "enterMnemonic" )}}</p>
                 <input type="text" v-model="mnemonic" class="overlay-input" />
-                <span class="overlay-span" v-if="showError">{{
-                  currentMessages.fields
-                }}</span>
+                <span class="overlay-span" v-if="showError">{{$t( "fields" )}}</span>
               </div>
               <button
                 type="button"
@@ -131,11 +127,11 @@
                 class="overlay-button"
                 style="margin-top: 50px"
               >
-                {{ currentMessages.login }}
+                {{$t( "login" )}}
               </button>
               <div class="overlay-footer">
-                <p style="margin: 0">{{ currentMessages.overlayfooter }}</p>
-                <button>{{ currentMessages.end }}</button>
+                <p style="margin: 0">{{$t( "overlayfooter" )}}</p>
+                <button>{{ $t("end") }}</button>
               </div>
             </div>
           </div>
@@ -163,38 +159,8 @@ export default {
       showError: false,
       settings: {
         ru: {
-          home: "ГЛАВНАЯ",
-          // services: 'Биржи',
-          // exchanges: "Обменники",
-          // miners: "МАЙНЕРЫ",
-          // storage: "ХРАНЕНИЕ",
-          faq: "FAQ",
-          aboutUs: "О НАС",
-          contacts: "КОНТАКТЫ",
-          tgChannel: "Наш ТГ канал",
-          enter: "ВОЙТИ",
-          login: "Войти",
-          enterMnemonic: "Мнемоника",
-          fields: "* - обязательные поля",
-          overlayfooter: "У вас нет учетной записи?",
-          end: "Зарегистрируйтесь!",
         },
         en: {
-          home: "HOME",
-          // services: 'SERVICES',
-          // exchanges: "EXCHANGES",
-          // miners: "MINERS",
-          // storage: "STORAGE",
-          faq: "FAQ",
-          aboutUs: "ABOUT US",
-          contacts: "CONTACTS",
-          tgChannel: "JOIN to",
-          enter: "LOGIN",
-          login: "Sign In",
-          enterMnemonic: "Mnemonic",
-          fields: "* - required fields",
-          overlayfooter: "Do not have an account?",
-          end: "Register!",
         },
       },
       logoUrl: "",
@@ -242,6 +208,9 @@ export default {
     selectLanguage(language) {
       this.selectedLanguage = language;
       this.showLanguageList = false;
+
+      this.$i18n.locale = language === 'en' ? '/en' : '/';
+      this.$router.push(this.$i18n.locale);
     },
     togglePopup() {
       this.showPopup = !this.showPopup;

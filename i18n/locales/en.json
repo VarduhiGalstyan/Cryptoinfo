@@ -1,7 +1,19 @@
 {
-    "footerText": "Cryptoinfo is an independent review platform of the entire crypto industry.",
+  "home": "HOME",
+  "faq": "FAQ",
+  "aboutUs": "ABOUT US",
+  "contacts": "CONTACTS",
+  "tgChannel": "JOIN to",
+  "enter": "LOGIN",
+  "login": "Sign In",
+  "enterMnemonic": "Mnemonic",
+  "fields": "* - required fields",
+  "overlayfooter": "Do not have an account?",
+  "end": "Register!",
+
     "contactUs": "Connect with us",
-    "infoHeader": "Our Telegram Channel",
-    "allRightsReserved": "All Rights Reserved"
+    "allRightsReserved": "All Rights Reserved",
+    "subscribe": "Subscribe",
+    "placeholder":"Subscribe to news (Enter your email)"
   }
   
