@@ -14,7 +14,7 @@
                            </div>
                            <div class="column">
                               <div class="views">
-                                 <img style="width: 16px; height: 14px;" src="/img/eye-icon.svg" alt="eye">
+                                 <img style="width: 16px; height: 14px;" src="/public/img/eye-icon.svg" alt="eye">
                                  <div class="views-number">{{ post.views }}</div>
                               </div>
                            </div>
@@ -47,32 +47,32 @@
          </div>
          <div class="bar">
             <div class="side">
-               <img src="/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
+               <img src="/public/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
                <h2 class="title">Новости из тематических телеграм каналов</h2>
             </div>
             <div>
-               <div class="card1">
+               <div v-for="tgPost in tgPosts" :key="tgPost.link" class="card1">
                   <div class="card1-top">
                      <div class="card1-logo">
-                        <a href="#" class="a">
-                           <img src="/img/1123_cryptoinfo_me.webp" alt="imgg">
+                        <a :href="tgPost.link" class="a">
+                           <img :src="'https://api.cryptoinfo.me/uploads/posts/' + tgPost.image" :alt="tgPost.altText">
                         </a>
                      </div>
                      <div class="card1-name">
-                        <a href="#" class="name-card1">Crypto Info</a>
+                        <a :href="tgPost.link" class="name-card1">{{ tgPost.info }}</a>
                      </div>
                   </div>
                   <div class="card1-text">
-                     Crypto.com анонсировала стратегическое партнерство с Deutsche Bank, которое позволит улучшить её карточную программу и расширить возможности использования криптовалют в реальных платежах. ...
+                     {{ tgPost.anons }}
                   </div>
                   <div class="card1-data">
                      <div class="card1-column">
-                        <div class="card1-day">11.12.2024</div>
+                        <div class="card1-day">{{ tgPost.date }}</div>
                      </div>
                      <div class="card1-column">
                         <div class="card1-views">
                            <img src="/img/eye-icon.svg" alt="eye">
-                           <div class="eye-number">2</div>
+                           <div class="eye-number">{{ tgPost.views }}</div>
                         </div>
                      </div>
                   </div>
@@ -89,50 +89,52 @@
 </template>
   
     
-    <script>
-    import { onMounted, ref } from "vue";
-    import { useApi } from "@/stores/api";
+<script>
+import { onMounted, ref,  } from "vue";
+import { useApi } from "@/stores/api";
+import { useI18n } from "vue-i18n";
     
-    export default {
+   export default {
       setup() {
-        const posts = ref([]);
-        const page = ref(1); 
-        const myStore = useApi();
-        
-    const loadPosts = async () => {
-      try {
-        await myStore.fetchData3(page.value);  
-        console.log(myStore.myPost);
-        if (myStore.myPost && myStore.myPost.posts) {
-          const newPosts = myStore.myPost.posts.map((post) => ({
-            id: post.id,
-            caption: post.caption_en,
-            img: post.image,
+      const posts = ref([]);
+      const tgPosts = ref([]);
+      const myStore = useApi();
+      const i18n = useI18n();
+
+      const firstLogic = async () => {
+         await myStore.fetchData3();
+         posts.value = myStore.myPost.posts.map((post) => ({
+         id: post.id,
+         caption: i18n.locale.value === "ru" ? post.caption_ru : post.caption_en, 
+         img: post.image,
+         altText: "news image",
+         anons: i18n.locale.value === "en" ? post.anons_en : post.anons_ru, 
+         tags: post.tags_en.split(","),
+         date: post.created_at.split("T")[0].split("-").reverse().join("."),
+         views: post.post_view,
+         link: `/post/${post.id}`,
+         }));
+      };
+      const secondLogic = async ()  => {
+         await myStore.fetchData4(); 
+         tgPosts.value= myStore.myTgPost.posts.map((post) => ({
+            link: post.link,
+            image: post.image,
             altText: "news image",
-            anons: post.anons_en,
-            tags: post.tags_en.split(","),
-            date: post.created_at.split("T")[0].split("-").reverse().join("."),
+            anons: post.anons,
+            date: post.post_time.split(" ")[0].split("-").reverse().join("."),
             views: post.post_view,
-            link: `/post/${post.id}`,
-          }));
-          posts.value = [...posts.value, ...newPosts];  
-        } else {
-          console.error('Posts are not available!');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+            info: post.caption,
+         }));
 
-    onMounted(loadPosts);
+     };
+      onMounted(() => {
+      firstLogic();
+      secondLogic();
+    });
 
-    const loadMorePosts = () => {
-      page.value += 1;  
-      loadPosts();  
-    };
-
-    return { posts, loadMorePosts };
-  },
+      return{posts, tgPosts};
+   },
 };
 </script>
 

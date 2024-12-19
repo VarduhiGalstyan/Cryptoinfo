@@ -4,6 +4,8 @@ export const useApi = defineStore("api", {
   state: () => ({
     myData: null,
     myPost: [],
+    myTgPost: [],
+
   }),
   actions: {
     async fetchData() {
@@ -25,25 +27,7 @@ export const useApi = defineStore("api", {
         console.error("Error fetching data:", error);
       }
     },
-    async fetchData2() {
-      try {
-        const response1 = await fetch(
-          useRuntimeConfig().public.apiURL + "/get-posts",
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ api_key: useRuntimeConfig().public.apiKey }),
-          }
-        );
-        const data = await response1.json();
-        this.myPost = data;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
+    
     async fetchData3() {
       try {
         const response = await fetch(useRuntimeConfig().public.apiUrlLimit, {
@@ -60,5 +44,24 @@ export const useApi = defineStore("api", {
         console.error("Error fetching data:", error);
       }
     },
+    async fetchData4() {
+      try {
+        const response = await fetch(
+          useRuntimeConfig().public.apiURL3,
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ api_key: useRuntimeConfig().public.apiKey }),
+          }
+        );
+        const data = await response.json();
+        this.myTgPost = data;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
   },
 });
