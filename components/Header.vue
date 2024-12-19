@@ -31,13 +31,13 @@
                 <button @click="toggleTheme" class="change-color">
                   <img
                     v-if="isDarkTheme"
-                    src="/img/theme-dark.svg"
+                    src="/assets/img/theme-dark.svg"
                     alt="theme-dark"
                     class="theme"
                   />
                   <img
                     v-else
-                    src="/img/theme-light.svg"
+                    src="/assets/img/theme-light.svg"
                     alt="theme-light"
                     class="theme"
                   />
@@ -45,7 +45,7 @@
                 <div>
                   <div @click="toggleLanguageList" class="max-ru-us">
                     <img :src="languageFlag" alt="ru-us" class="ru-us" />
-                    <img src="/img/arrow.svg" alt="flag" class="flag" />
+                    <img src="/assets/img/arrow.svg" alt="flag" class="flag" />
                   </div>
                   <div class="list-ru-us" :class="{ show: showLanguageList }">
                     <div
@@ -53,7 +53,7 @@
                       class="list-ru"
                       :class="{ active: selectedLanguage === 'ru' }"
                     >
-                      <img src="/img/ru.svg" alt="ru" />
+                      <img src="/assets/img/ru.svg" alt="ru" />
                       <p class="ru-us-name">Русский</p>
                     </div>
                     <div
@@ -61,7 +61,7 @@
                       class="list-ru"
                       :class="{ active: selectedLanguage === 'en' }"
                     >
-                      <img src="/img/us.svg" alt="us" />
+                      <img src="/assets/img/us.svg" alt="us" />
                       <p class="ru-us-name">English</p>
                     </div>
                   </div>
@@ -69,7 +69,7 @@
               </div>
               <div class="right-bottom">
                 <a href="https://t.me/cryptoinfo_me"> {{$t( "tgChannel" )}}</a>
-                <img src="/img/tg_logo.webp" alt="tg-logo" class="tg-logo" />
+                <img src="/assets/img/tg_logo.webp" alt="tg-logo" class="tg-logo" />
               </div>
             </div>
           </div>
@@ -81,8 +81,8 @@
                 <input type="number" />
               </div>
               <div class="bitcoin-logo">
-                <img src="/img/bitcoinLogo.svg" alt="bitcoinLogo" />
-                <img src="/img/arrow.svg" alt="arrow" />
+                <img src="/assets/img/bitcoinLogo.svg" alt="bitcoinLogo" />
+                <img src="/assets/img/arrow.svg" alt="arrow" />
               </div>
             </div>
             <div class="button1">
@@ -91,14 +91,14 @@
               </div>
               <div class="bitcoin-logo" style="margin-left: 20px">
                 <div>$</div>
-                <img src="/img/arrow.svg" alt="arrow" />
+                <img src="/assets/img/arrow.svg" alt="arrow" />
               </div>
             </div>
           </div>
           <div class="crypto-infos">
             <div class="info-max">
               <div class="info-left">
-                <img src="/img/bitcoinLogo.svg" alt="bitcoinLogo" />
+                <img src="/assets/img/bitcoinLogo.svg" alt="bitcoinLogo" />
                 <div class="namee-nm">
                   <span class="namee">Bitcoin</span>
                   <span class="nm">BTN</span>
@@ -112,7 +112,7 @@
           <div class="overlay-max">
             <div class="overlay-max1">
               <button class="overlay-close" @click="closePopup">
-                <img src="/img/close.DslCkta_.png" class="close" alt="close" />
+                <img src="/assets/img/close.DslCkta_.png" class="close" alt="close" />
               </button>
               <h2 class="overlay-name">{{$t( "login" )}}</h2>
               <p class="overlay-text"></p>
@@ -143,8 +143,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { getSettings } from "~/stores/api.js";
 import { useRouter } from "vue-router";
+import { useApi } from "~/stores/api";
 
 const isDarkTheme = ref(true);
 const showLanguageList = ref(false);
@@ -159,32 +159,36 @@ const settings = ref({
 const logoUrl = ref("");
 
 const router = useRouter();
+const apiStore = useApi();
 
-// Computed properties
 const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
-const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/img/ru.svg" : "/img/us.svg"));
-const currentMessages = computed(() => settings.value[selectedLanguage.value]);
+const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
+const currentMessages = computed(() => settings.value[selectedLanguage.value] || {});
 
-// Fetch settings when the component is mounted
 onMounted(() => {
   fetchSettings();
 });
 
-// Methods
 const fetchSettings = async () => {
-  const fetchedSettings = await getSettings();
-  if (fetchedSettings) {
-    settings.value.en.services = fetchedSettings.type1_title_en;
-    settings.value.ru.services = fetchedSettings.type1_title_ru;
-    logoUrl.value = fetchedSettings.logo;
-    settings.value.en.exchanges = fetchedSettings.type2_title_en;
-    settings.value.ru.exchanges = fetchedSettings.type2_title_ru;
-    settings.value.en.miners = fetchedSettings.type3_title_en;
-    settings.value.ru.miners = fetchedSettings.type3_title_ru;
-    settings.value.en.storage = fetchedSettings.type4_title_en;
-    settings.value.ru.storage = fetchedSettings.type4_title_ru;
+  await apiStore.fetchData(); // Fetch data from the API
+  if (apiStore.myHeader) {
+    const apiHeader = apiStore.myHeader;
+    settings.value.en = {
+      services: apiHeader.type1_title_en,
+      exchanges: apiHeader.type2_title_en,
+      miners: apiHeader.type3_title_en,
+      storage: apiHeader.type4_title_en,
+    };
+    settings.value.ru = {
+      services: apiHeader.type1_title_ru,
+      exchanges: apiHeader.type2_title_ru,
+      miners: apiHeader.type3_title_ru,
+      storage: apiHeader.type4_title_ru,
+    };
+    logoUrl.value = apiHeader.logo; // Set the logo
   }
 };
+
 
 const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value;
@@ -552,14 +556,14 @@ button {
   unicode-bidi: isolate;
 }
 .dark-theme header {
-  background: no-repeat 100% 100% / 65% url(/img/wave-20.webp),
-    no-repeat 50% / cover url(/img/cover.webp);
+  background: no-repeat 100% 100% / 65% url(/assets/img/wave-20.webp),
+    no-repeat 50% / cover url(/assets/img/cover.webp);
   position: relative;
 }
 .light-theme header {
   background-color: #f7f7f7;
-  background: no-repeat 130% 100% / 80% 112% url(/img/bg_arrow.webp),
-    no-repeat 50% / cover url(/img/home-light-1.webp);
+  background: no-repeat 130% 100% / 80% 112% url(/assets/img/bg_arrow.webp),
+    no-repeat 50% / cover url(/assets/img/home-light-1.webp);
 }
 .light-theme a,
 button .light-theme button,

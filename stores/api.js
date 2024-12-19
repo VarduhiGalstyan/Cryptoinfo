@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 
 export const useApi = defineStore("api", {
   state: () => ({
-    myData: null,
+    // myData: null,
+    myHeader: null,
     myPost: [],
     myTgPost: [],
 
@@ -22,7 +23,7 @@ export const useApi = defineStore("api", {
           }
         );
         const data = await response.json();
-        this.myData = data;
+        this.myHeader = data;
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -37,4 +37,7 @@ export default defineNuxtConfig ({
     ],
     defaultLocale: "ru",
   },
+  nitro: {
+    compressPublicAssets: true,
+  },
 });

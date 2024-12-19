@@ -14,7 +14,7 @@
                            </div>
                            <div class="column">
                               <div class="views">
-                                 <img style="width: 16px; height: 14px;" src="/public/img/eye-icon.svg" alt="eye">
+                                 <img style="width: 16px; height: 14px;" src="/assets/img/eye-icon.svg" alt="eye">
                                  <div class="views-number">{{ post.views }}</div>
                               </div>
                            </div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="text-buttons">
                            <div class="cisit">
-                              <img src="/img/visit-icon.svg" alt="visit-icon" class="visit-icon">
+                              <img src="/assets/img/visit-icon.svg" alt="visit-icon" class="visit-icon">
                            </div>
                            <div class="links">
                               <div class="link" v-for="tag in post.tags" :key="tag" > {{ tag }}</div>
@@ -47,7 +47,7 @@
          </div>
          <div class="bar">
             <div class="side">
-               <img src="/public/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
+               <img src="/assets/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
                <h2 class="title">Новости из тематических телеграм каналов</h2>
             </div>
             <div>
@@ -71,7 +71,7 @@
                      </div>
                      <div class="card1-column">
                         <div class="card1-views">
-                           <img src="/img/eye-icon.svg" alt="eye">
+                           <img src="/assets/img/eye-icon.svg" alt="eye">
                            <div class="eye-number">{{ tgPost.views }}</div>
                         </div>
                      </div>
@@ -90,53 +90,65 @@
   
     
 <script>
-import { onMounted, ref,  } from "vue";
+import { onMounted, ref } from "vue";
 import { useApi } from "@/stores/api";
 import { useI18n } from "vue-i18n";
-    
-   export default {
-      setup() {
-      const posts = ref([]);
-      const tgPosts = ref([]);
-      const myStore = useApi();
-      const i18n = useI18n();
 
-      const firstLogic = async () => {
-         await myStore.fetchData3();
-         posts.value = myStore.myPost.posts.map((post) => ({
-         id: post.id,
-         caption: i18n.locale.value === "ru" ? post.caption_ru : post.caption_en, 
-         img: post.image,
-         altText: "news image",
-         anons: i18n.locale.value === "en" ? post.anons_en : post.anons_ru, 
-         tags: post.tags_en.split(","),
-         date: post.created_at.split("T")[0].split("-").reverse().join("."),
-         views: post.post_view,
-         link: `/post/${post.id}`,
-         }));
-      };
-      const secondLogic = async ()  => {
-         await myStore.fetchData4(); 
-         tgPosts.value= myStore.myTgPost.posts.map((post) => ({
-            link: post.link,
-            image: post.image,
-            altText: "news image",
-            anons: post.anons,
-            date: post.post_time.split(" ")[0].split("-").reverse().join("."),
-            views: post.post_view,
-            info: post.caption,
-         }));
+export default {
+  setup() {
+    const posts = ref([]);
+    const tgPosts = ref([]);
+    const myStore = useApi();
+    const i18n = useI18n();
+    const currentPage = ref(1); 
+    const postsPerPage = 10; 
 
-     };
-      onMounted(() => {
+    const firstLogic = async () => {
+      await myStore.fetchData3(currentPage.value, postsPerPage);
+      const newPosts = myStore.myPost.posts.map((post) => ({
+        id: post.id,
+        caption: i18n.locale.value === "ru" ? post.caption_ru : post.caption_en,
+        img: post.image,
+        altText: "news image",
+        anons: i18n.locale.value === "en" ? post.anons_en : post.anons_ru,
+        tags: post.tags_en.split(","),
+        date: post.created_at.split("T")[0].split("-").reverse().join("."),
+        views: post.post_view,
+        link: `/post/${post.id}`,
+      }));
+      posts.value = [...posts.value, ...newPosts]; 
+    };
+
+    const secondLogic = async () => {
+      await myStore.fetchData4();
+      tgPosts.value = myStore.myTgPost.posts.map((post) => ({
+        link: post.link,
+        image: post.image,
+        altText: "news image",
+        anons: post.anons,
+        date: post.post_time.split(" ")[0].split("-").reverse().join("."),
+        views: post.post_view,
+        info: post.caption,
+      }));
+    };
+
+    const loadMorePosts = async () => {
+      currentPage.value += 1; 
+      await firstLogic(); 
+    };
+
+    onMounted(() => {
       firstLogic();
       secondLogic();
     });
 
-      return{posts, tgPosts};
-   },
+    return { posts, tgPosts, loadMorePosts };
+  },
 };
 </script>
+
+
+
 
 <style scoped>
 .card1-text{
