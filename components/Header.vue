@@ -160,31 +160,34 @@ const logoUrl = ref("");
 
 const router = useRouter();
 const apiStore = useApi();
-
-const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
-const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
-const currentMessages = computed(() => settings.value[selectedLanguage.value] || {});
-
-onMounted(() => {
+onMounted(()=>{
   fetchSettings();
 });
+const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
+const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
+const currentMessages = computed(() => settings.value);
+console.log(currentMessages);
+
+
 
 const fetchSettings = async () => {
-  await apiStore.fetchData(); // Fetch data from the API
+  await apiStore.fetchData(); 
   if (apiStore.myHeader) {
     const apiHeader = apiStore.myHeader;
     settings.value.en = {
-      services: apiHeader.type1_title_en,
-      exchanges: apiHeader.type2_title_en,
-      miners: apiHeader.type3_title_en,
-      storage: apiHeader.type4_title_en,
+      "services": apiHeader.type1_title_en,
+      "exchanges": apiHeader.type2_title_en,
+      "miners": apiHeader.type3_title_en,
+      "storage": apiHeader.type4_title_en,
     };
     settings.value.ru = {
-      services: apiHeader.type1_title_ru,
-      exchanges: apiHeader.type2_title_ru,
-      miners: apiHeader.type3_title_ru,
-      storage: apiHeader.type4_title_ru,
+      "services": apiHeader.type1_title_ru,
+      "exchanges": apiHeader.type2_title_ru,
+      "miners": apiHeader.type3_title_ru,
+      "storage": apiHeader.type4_title_ru,
     };
+    console.log( settings.value);
+    
     logoUrl.value = apiHeader.logo; // Set the logo
   }
 };
