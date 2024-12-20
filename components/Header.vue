@@ -11,10 +11,10 @@
           <div class="centron-right">
             <div class="top-a">
               <a href="https://cryptoinfo.me/">{{$t( "home" )}}</a>
-              <a href="https://cryptoinfo.me/services">{{  currentMessages.services}}</a>
-              <a href="https://cryptoinfo.me/exchanges">{{ currentMessages.exchanges }}</a>
-              <a href="https://cryptoinfo.me/miners">{{  currentMessages.miners }}</a>
-              <a href="https://cryptoinfo.me/storages">{{  currentMessages.storage}}</a>
+              <a href="https://cryptoinfo.me/services">{{ locale === 'en' ? apiHeader.type1_title_en :  apiHeader.type1_title_ru }}</a>
+              <a href="https://cryptoinfo.me/exchanges">{{ locale === 'en' ? apiHeader.type2_title_en :  apiHeader.type2_title_ru }}</a>
+              <a href="https://cryptoinfo.me/miners">{{ locale === 'en' ? apiHeader.type3_title_en :  apiHeader.type3_title_ru }}</a>
+              <a href="https://cryptoinfo.me/storages">{{ locale === 'en' ? apiHeader.type4_title_en :  apiHeader.type4_title_ru }}</a>
               <a href="https://cryptoinfo.me/faq">{{$t( "faq" )}}</a>
               <a href="https://cryptoinfo.me/about-us">{{$t( "aboutUs" )}}</a>
               <a href="https://cryptoinfo.me/contacts" class="home2">{{$t( "contacts" )}}</a>
@@ -85,6 +85,7 @@
             <div class="button1">
               <div class="input">
                 <input type="number" />
+
               </div>
               <div class="bitcoin-logo" style="margin-left: 20px">
                 <select v-model="selectedCurrency" @change="updateSecondInputt">
@@ -98,13 +99,13 @@
           <div class="crypto-infos">
             <div class="info-max">
               <div class="info-left" v-for="crypto in cryptos" :key="crypto.id">
-                <img :src="crypto.img" alt="logo" class="crypto-logo" />
+                <img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 30px;"/>
                 <div class="namee-nm">
-                  <div  :class="{ cryptoName2 : !isDarkTheme, cryptoName:isDarkTheme}">{{ crypto.name }}</div>
+                  <div  :class="{ cryptoName2 : !isDarkTheme, cryptoName:isDarkTheme}" >{{ crypto.name }}</div>
                   <div :class="{ cryptosymbol2 : !isDarkTheme, cryptosymbol:isDarkTheme}" >{{ crypto.symbol }}</div>
                 </div>
               </div>
-              <div  :class="{ cryptoprice2 : !isDarkTheme, cryptoprice :isDarkTheme}">{{ crypto.price }}</div>
+              <!-- <div  :class="{ cryptoprice2 : !isDarkTheme, cryptoprice :isDarkTheme}">{{ crypto.price }}</div> -->
             </div>
           </div>
         </div>
@@ -145,7 +146,10 @@
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useApi } from "~/stores/api";
+import { useI18n } from "vue-i18n";
 import axios from 'axios';
+
+const {t, locale} = useI18n();
 
 
 const isDarkTheme = ref(true);
@@ -154,11 +158,10 @@ const selectedLanguage = ref("ru");
 const showPopup = ref(false);
 const mnemonic = ref("");
 const showError = ref(false);
-const settings = ref({
-  ru: {},
-  en: {},
-});
-const logoUrl = ref("");
+// const settings = ref({
+//   ru: {},
+//   en: {},
+// });
 const cryptos = ref([
   { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', price: '-' },
   { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', img: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', price: '-' },
@@ -168,40 +171,25 @@ const cryptos = ref([
 ]);
 
 const router = useRouter();
-const apiStore = useApi();
+
+
 onMounted(()=>{
-  fetchSettings();
+  // fetchSettings();
   fetchCryptoPrices();
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     isDarkTheme.value = savedTheme === "dark";
   }
 });
+
 const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
 const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
-const currentMessages = computed(() => settings.value);
 
-const fetchSettings = async () => {
-  await apiStore.fetchData(); 
-  if (apiStore.myHeader) {
-    const apiHeader = apiStore.myHeader;
-    settings.value.en = {
-      "services": apiHeader.type1_title_en,
-      "exchanges": apiHeader.type2_title_en,
-      "miners": apiHeader.type3_title_en,
-      "storage": apiHeader.type4_title_en,
-    };
-    settings.value.ru = {
-      "services": apiHeader.type1_title_ru,
-      "exchanges": apiHeader.type2_title_ru,
-      "miners": apiHeader.type3_title_ru,
-      "storage": apiHeader.type4_title_ru,
-    };
-    console.log( settings.value);
-    
-    logoUrl.value = apiHeader.logo; // Set the logo
-  }
-};
+const apiStore = useApi();
+await apiStore.fetchData();
+const apiHeader = apiStore.myHeader.setting;
+const logoUrl = apiHeader.logo;
+console.log('nor',apiHeader);
 
 const fetchCryptoPrices = async () => {
   try {
@@ -231,7 +219,7 @@ const selectLanguage = (language) => {
   selectedLanguage.value = language;
   showLanguageList.value = false;
 
-  const locale = language === "en" ? "/en" : "/";
+  const locale = language;
   router.push(locale);
 };
 
