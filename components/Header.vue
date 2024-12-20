@@ -160,23 +160,19 @@ const selectedLanguage = ref("ru");
 const showPopup = ref(false);
 const mnemonic = ref("");
 const showError = ref(false);
-// const settings = ref({
-//   ru: {},
-//   en: {},
-// });
+
 const cryptos = ref([
-  { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', price: '-' },
-  { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', img: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', price: '-' },
-  { id: 'monero', name: 'Monero', symbol: 'XMR', img: 'https://cryptologos.cc/logos/monero-xmr-logo.png', price: '-' },
-  { id: 'tron', name: 'Tron', symbol: 'TRX', img: 'https://cryptologos.cc/logos/tron-trx-logo.png', price: '-' },
-  { id: 'litecoin', name: 'Litecoin', symbol: 'LTC', img: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png', price: '-' },
+  { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', price: '' },
+  { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', img: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', price: '' },
+  { id: 'monero', name: 'Monero', symbol: 'XMR', img: 'https://cryptologos.cc/logos/monero-xmr-logo.png', price: '' },
+  { id: 'tron', name: 'Tron', symbol: 'TRX', img: 'https://cryptologos.cc/logos/tron-trx-logo.png', price: '' },
+  { id: 'litecoin', name: 'Litecoin', symbol: 'LTC', img: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png', price: '' },
 ]);
 
 const router = useRouter();
 
 
 onMounted(()=>{
-  // fetchSettings();
   fetchCryptoPrices();
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
