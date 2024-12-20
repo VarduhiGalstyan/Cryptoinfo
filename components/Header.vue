@@ -99,13 +99,15 @@
           <div class="crypto-infos">
             <div class="info-max">
               <div class="info-left" v-for="crypto in cryptos" :key="crypto.id">
-                <img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 30px;"/>
-                <div class="namee-nm">
-                  <div  :class="{ cryptoName2 : !isDarkTheme, cryptoName:isDarkTheme}" >{{ crypto.name }}</div>
-                  <div :class="{ cryptosymbol2 : !isDarkTheme, cryptosymbol:isDarkTheme}" >{{ crypto.symbol }}</div>
+                <div>
+                  <img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 30px;"/>
+                  <div class="namee-nm">
+                    <div  :class="{ cryptoName2 : !isDarkTheme, cryptoName:isDarkTheme}" >{{ crypto.name }}</div>
+                    <div :class="{ cryptosymbol2 : !isDarkTheme, cryptosymbol:isDarkTheme}" >{{ crypto.symbol }}</div>
+                  </div>
                 </div>
+                <div  :class="{ cryptoprice2 : !isDarkTheme, cryptoprice :isDarkTheme}">{{ crypto.price }}</div>
               </div>
-              <!-- <div  :class="{ cryptoprice2 : !isDarkTheme, cryptoprice :isDarkTheme}">{{ crypto.price }}</div> -->
             </div>
           </div>
         </div>
@@ -189,14 +191,15 @@ const apiStore = useApi();
 await apiStore.fetchData();
 const apiHeader = apiStore.myHeader.setting;
 const logoUrl = apiHeader.logo;
-console.log('nor',apiHeader);
+
 
 const fetchCryptoPrices = async () => {
   try {
     const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,monero,ethereum,tron,litecoin,tether&vs_currencies=usd');
+    console.log('coins',cryptos);
     cryptos.value.forEach(crypto => {
       if (response.data[crypto.id]) {
-        crypto.price = response.data[crypto.id].usd;
+        crypto.price= response.data[crypto.id].usd;
       }
     });
   } catch (error) {
