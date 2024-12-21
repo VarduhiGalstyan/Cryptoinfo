@@ -147,7 +147,7 @@ export default {
       secondLogic();
     });
 
-    return { posts, tgPosts, loadMorePosts };
+    return { posts, tgPosts, loadMorePosts, loadMorePosts };
   },
 };
 </script>
