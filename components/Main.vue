@@ -78,7 +78,7 @@
                   </div>
                </div>
                <div class="card-button" style="padding-top: 20px;">
-                  <button class="max-button">
+                  <button class="max-button" @click="loadMorePosts2">
                      <span>Больше новостей</span>
                   </button>
                </div>
@@ -101,6 +101,7 @@ export default {
     const myStore = useApi();
     const i18n = useI18n();
     const currentPage = ref(1); 
+    const currentPage2 = ref(1); 
     const postsPerPage = 10; 
 
     const firstLogic = async () => {
@@ -120,7 +121,7 @@ export default {
     };
 
     const secondLogic = async () => {
-      await myStore.fetchData4();
+      await myStore.fetchData4(currentPage2.value, postsPerPage);
       tgPosts.value = myStore.myTgPost.posts.map((post) => ({
         link: post.link,
         image: post.image,
@@ -138,14 +139,17 @@ export default {
       currentPage.value += postsPerPage; 
       await firstLogic(); 
     };
-    
+    const loadMorePosts2 = async () => {
+      currentPage2.value += postsPerPage; 
+      await secondLogic(); 
+    };
 
     onMounted(() => {
       firstLogic();
       secondLogic();
     });
 
-    return { posts, tgPosts, loadMorePosts };
+    return { posts, tgPosts, loadMorePosts, loadMorePosts2 };
   },
 };
 </script>
