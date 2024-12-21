@@ -80,6 +80,11 @@
               <div class="input">
                 <input type="number" v-model.number="secondInputt" @change="updateFirstInputt" />
               </div>
+              <img
+                :src="cryptos.find(crypto => crypto.id === selectedCrypto)?.img"
+                alt="selected-crypto"
+                style=" width: 30px; height: 30px; margin-left: -10px;"
+              />  
               <select v-model="selectedCrypto" @change="updateSecondInputt">
                 <option v-for="crypto in cryptos" :key="crypto.id" :value="crypto.id">
                   {{ crypto.symbol }}
@@ -195,13 +200,7 @@ const fetchCryptoPrices = async () => {
 const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
 const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
 
-// onMounted(()=>{
-//   fetchCryptoPrices();
-//   const savedTheme = localStorage.getItem("theme");
-//   if (savedTheme) {
-//     isDarkTheme.value = savedTheme === "dark";
-//   }
-// });
+
 onMounted(fetchCryptoPrices);
 
 
@@ -258,9 +257,6 @@ const updateSecondInputt = () => {
   }
 };
 
-// const secondInputt = ref('');
-// const firstInputt = ref('');
-// const selectedCurrency = ref('usd');
 </script>
 
 

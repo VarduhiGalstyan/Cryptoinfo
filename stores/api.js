@@ -29,10 +29,9 @@ export const useApi = defineStore("api", {
       }
     },
     
-    async fetchData3() {
+    async fetchData3(offset, limit) {
       try {
-        // const response = await fetch(`${useRuntimeConfig().public.apiUrlLimit}${state}&limit=10`, {
-        const response = await fetch(useRuntimeConfig().public.apiUrlLimit, {
+        const response = await fetch(`${useRuntimeConfig().public.apiUrlLimit}?offset=${offset}&limit=${limit}`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -46,10 +45,10 @@ export const useApi = defineStore("api", {
         console.error("Error fetching data:", error);
       }
     },
-    async fetchData4() {
+    async fetchData4(offset, limit) {
       try {
         const response = await fetch(
-          useRuntimeConfig().public.apiURL3,
+          `${useRuntimeConfig().public.apiURL3}?offset=${offset}&limit=${limit}`,
           {
             method: "POST",
             headers: {
@@ -60,7 +59,7 @@ export const useApi = defineStore("api", {
           }
         );
         const data = await response.json();
-        this.myTgPost = data;
+        this.myTgPost = [...this.myTgPost, ...data];
       } catch (error) {
         console.error("Error fetching data:", error);
       }
