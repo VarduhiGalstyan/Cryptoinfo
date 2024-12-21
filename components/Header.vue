@@ -76,16 +76,17 @@
         </div>
         <div class="max-crypto">
           <div class="buttons">
+
             <div class="button1">
               <div class="input">
                 <input type="number" v-model.number="secondInputt"  @change="updateFirstInputt" />
               </div>
               
             </div>
+
             <div class="button1">
               <div class="input">
                 <input type="number" />
-
               </div>
               <div class="bitcoin-logo" style="margin-left: 20px">
                 <select v-model="selectedCurrency" @change="updateSecondInputt">
@@ -99,8 +100,8 @@
           <div class="crypto-infos">
             <div class="info-max">
               <div class="info-left" v-for="crypto in cryptos" :key="crypto.id">
-                <div>
-                  <img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 30px;"/>
+                <div style="display: flex; gap: 10px;">
+                  <img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 40px;"/>
                   <div class="namee-nm">
                     <div  :class="{ cryptoName2 : !isDarkTheme, cryptoName:isDarkTheme}" >{{ crypto.name }}</div>
                     <div :class="{ cryptosymbol2 : !isDarkTheme, cryptosymbol:isDarkTheme}" >{{ crypto.symbol }}</div>
@@ -506,6 +507,13 @@ button {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
+select{
+  color: #fff;
+  background: #ffffff1a;
+  border-block-color: #ffffff1a;  
+  height: 36px;
+  width: 36px;
+}
 .info-max {
   align-items: center;
   display: flex;
@@ -526,9 +534,9 @@ button {
 .max-crypto {
   flex-direction: column;
   gap: 40px;
-  padding-top: 7%;
   padding-left: 29%;
   width: 92.5%;
+  margin-left: -85px;
 }
 .buttons {
   align-items: center;
@@ -563,8 +571,8 @@ button {
   flex-grow: 1;
   font-size: 18px;
   font-weight: 500;
-  max-width: 46.5%;
-  padding: 8px 0;
+  max-width: 97.5%;
+    padding: 8px 0;
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -983,9 +991,11 @@ button {
 }
 .info-max {
   align-items: center;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  /* gap: 160px; */
+  width: 600px;
   justify-content: flex-start;
   min-height: 35px;
   overflow: hidden;
@@ -998,13 +1008,6 @@ button {
   justify-content: flex-start;
 }
 
-.max-crypto {
-  flex-direction: column;
-  gap: 40px;
-  padding-top: 7%;
-  padding-left: 29%;
-  width: 92.5%;
-}
 .buttons {
   align-items: center;
   display: flex;
@@ -1038,7 +1041,7 @@ button {
   flex-grow: 1;
   font-size: 18px;
   font-weight: 500;
-  max-width: 46.5%;
+  max-width: 95.5%;
   padding: 8px 0;
   align-items: center;
   display: flex;

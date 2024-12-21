@@ -31,6 +31,7 @@ export const useApi = defineStore("api", {
     
     async fetchData3() {
       try {
+        // const response = await fetch(`${useRuntimeConfig().public.apiUrlLimit}${state}&limit=10`, {
         const response = await fetch(useRuntimeConfig().public.apiUrlLimit, {
           method: "POST",
           headers: {
