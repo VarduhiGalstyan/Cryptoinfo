@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 
 export const useApi = defineStore("api", {
   state: () => ({
-    // myData: null,
     myHeader: null,
     myPost: [],
     myTgPost: [],
@@ -29,9 +28,9 @@ export const useApi = defineStore("api", {
       }
     },
     
-    async fetchData3(offset, limit) {
+    async fetchData3(state) {
       try {
-        const response = await fetch(`${useRuntimeConfig().public.apiUrlLimit}?offset=${offset}&limit=${limit}`, {
+        const response = await fetch(`${useRuntimeConfig().public.apiUrlLimit}${state}&limit=10`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -45,10 +44,10 @@ export const useApi = defineStore("api", {
         console.error("Error fetching data:", error);
       }
     },
-    async fetchData4(offset, limit) {
+    async fetchData4(state) {
       try {
         const response = await fetch(
-          `${useRuntimeConfig().public.apiURL3}?offset=${offset}&limit=${limit}`,
+          `${useRuntimeConfig().public.apiURL3}${state}&limit=10`,
           {
             method: "POST",
             headers: {
@@ -59,7 +58,7 @@ export const useApi = defineStore("api", {
           }
         );
         const data = await response.json();
-        this.myTgPost = [...this.myTgPost, ...data];
+        this.myTgPost = data;
       } catch (error) {
         console.error("Error fetching data:", error);
       }
