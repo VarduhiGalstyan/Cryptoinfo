@@ -76,24 +76,26 @@
         </div>
         <div class="max-crypto">
           <div class="buttons">
-
             <div class="button1">
               <div class="input">
-                <input type="number" v-model.number="secondInputt"  @change="updateFirstInputt" />
+                <input type="number" v-model.number="secondInputt" @change="updateFirstInputt" />
               </div>
-              
+              <select v-model="selectedCrypto" @change="updateSecondInputt">
+                <option v-for="crypto in cryptos" :key="crypto.id" :value="crypto.id">
+                  {{ crypto.symbol }}
+                </option>
+              </select>
             </div>
 
             <div class="button1">
               <div class="input">
-                <input type="number" />
+                <input type="number" v-model.number="secondInputt2" @change="updateFirstInputt" />
               </div>
               <div class="bitcoin-logo" style="margin-left: 20px">
                 <select v-model="selectedCurrency" @change="updateSecondInputt">
                   <option value="usd">$</option>
                   <option value="rub">₽</option>
                 </select>
-                
               </div>
             </div>
           </div>
@@ -160,6 +162,10 @@ const showLanguageList = ref(false);
 const selectedLanguage = ref("ru");
 const showPopup = ref(false);
 const mnemonic = ref("");
+const selectedCrypto = ref("bitcoin");
+const selectedCurrency = ref("usd");
+const secondInputt = ref("");
+const secondInputt2 = ref("");
 const showError = ref(false);
 
 const cryptos = ref([
@@ -171,24 +177,6 @@ const cryptos = ref([
 ]);
 
 const router = useRouter();
-
-
-onMounted(()=>{
-  fetchCryptoPrices();
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme) {
-    isDarkTheme.value = savedTheme === "dark";
-  }
-});
-
-const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
-const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
-
-const apiStore = useApi();
-await apiStore.fetchData();
-const apiHeader = apiStore.myHeader.setting;
-const logoUrl = apiHeader.logo;
-
 
 const fetchCryptoPrices = async () => {
   try {
@@ -203,6 +191,27 @@ const fetchCryptoPrices = async () => {
     console.error('Error fetching crypto prices:', error);
   }
 };
+
+const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
+const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
+
+// onMounted(()=>{
+//   fetchCryptoPrices();
+//   const savedTheme = localStorage.getItem("theme");
+//   if (savedTheme) {
+//     isDarkTheme.value = savedTheme === "dark";
+//   }
+// });
+onMounted(fetchCryptoPrices);
+
+
+const apiStore = useApi();
+await apiStore.fetchData();
+const apiHeader = apiStore.myHeader.setting;
+const logoUrl = apiHeader.logo;
+
+
+
 
 
 const toggleTheme = () => {
@@ -236,22 +245,22 @@ const handleSubmit = () => {
 };
 
 const updateFirstInputt = () => {
-  const price = cryptos.value.find(c => c.id === selectedCrypto.value).price;
-  if (secondInputt.value !== '' && price) {
-    firstInputt.value = (secondInputt.value / price).toFixed(2);
+  const price = cryptos.value.find((crypto) => crypto.id === selectedCrypto.value)?.price;
+  if (price) {
+    secondInputt2.value = (secondInputt.value * price).toFixed(2);
   }
 };
 
 const updateSecondInputt = () => {
-  const price = cryptos.value.find(c => c.id === selectedCrypto.value).price;
-  if (firstInputt.value !== '' && price) {
-    secondInputt.value = (firstInputt.value * price).toFixed(2);
+  const price = cryptos.value.find((crypto) => crypto.id === selectedCrypto.value)?.price;
+  if (price) {
+    secondInputt.value = (secondInputt2.value / price).toFixed(2);
   }
 };
 
-const secondInputt = ref('');
-const firstInputt = ref('');
-const selectedCurrency = ref('usd');
+// const secondInputt = ref('');
+// const firstInputt = ref('');
+// const selectedCurrency = ref('usd');
 </script>
 
 
