@@ -414,7 +414,7 @@ img{
     max-width: 865px;
     overflow: hidden;
     padding: 20px;
-    width: 100%;
+    width: max-content;
 }
 .bar{
     background: #171520;
@@ -436,17 +436,27 @@ img{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 80px 20px;
+    padding: 80px 9%;
 }
 .max-main{
    background: radial-gradient(50.31% 45.06% at 10.16% 91.73%, rgba(251, 21, 96, .08) 0, transparent 100%), radial-gradient(59.34% 35.83% at 93.49% 46.73%, rgba(111, 17, 237, .2) 25.5%, transparent 100%), linear-gradient(98deg, #16141f 19.74%, #100f16);
    scrollbar-width: none;
 }
+@media screen and (max-width: 1482px){
+   .cards-bar{
+      padding: 80px 3%;
+   }
+}
+@media screen and (max-width: 1637px){
+   .cards-bar{
+      /* padding: 80px 6%; */
+   }
+}
 @media screen and (max-width: 1319px) {
     .cards-bar{
         align-items: center;
         flex-direction: column;
-        padding: 60px 50px;
+        /* padding: 60px 50px; */
     }
     .card-img-div{
       flex-shrink: 0;

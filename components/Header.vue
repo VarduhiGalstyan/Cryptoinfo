@@ -85,8 +85,8 @@
                 alt="selected-crypto"
                 style=" width: 30px; height: 30px; margin-left: -10px;"
               />  
-              <select v-model="selectedCrypto" @change="updateSecondInputt">
-                <option v-for="crypto in cryptos" :key="crypto.id" :value="crypto.id">
+              <select v-model="selectedCrypto" @change="updateSecondInputt" >
+                <option v-for="crypto in cryptos" :key="crypto.id" :value="crypto.id" >
                   {{ crypto.symbol }}
                 </option>
               </select>
@@ -261,6 +261,13 @@ const updateSecondInputt = () => {
 
 
 <style scoped>
+select{
+  border: none;
+  background-color: #ffffff1a;
+}
+option{
+  color: #000 !important;
+}
 .overlay-input {
   border-radius: 10px;
   background: #ffffff1a;
@@ -539,9 +546,9 @@ select{
 .max-crypto {
   flex-direction: column;
   gap: 40px;
-  padding-left: 29%;
+  padding-left: 15%;
   width: 92.5%;
-  margin-left: -85px;
+  /* margin-left: -143px; */
 }
 .buttons {
   align-items: center;
@@ -648,7 +655,7 @@ button .light-theme button,
 }
 .centron-right {
   display: flex;
-  gap: 90px;
+  gap: 134px !important;
 }
 .top-a {
   padding-left: 20px;
@@ -1168,6 +1175,7 @@ button {
 .right-bottom {
   text-align: end;
 }
+
 
 @media screen and (min-width: 1024px) {
   .header[data-v-22f821ce] {

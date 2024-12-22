@@ -179,5 +179,12 @@ a{
     font-weight: 500;
     line-height: normal;
 }
+@media screen and (max-width: 1116px) {
+  .max{
+    display: flex;
+    flex-direction: column;
+    padding: 57px 213px 72px;
+  }
+}
 </style>
 
