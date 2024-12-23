@@ -30,7 +30,7 @@ export const useApi = defineStore("api", {
     
     async fetchData3(state) {
       try {
-        const response = await fetch(`${useRuntimeConfig().public.apiUrlLimit}${state}&limit=10`, {
+        const response = await fetch(`${useRuntimeConfig().public.apiURL + "/get-crypto-posts?offset="}${state}&limit=10`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -47,7 +47,7 @@ export const useApi = defineStore("api", {
     async fetchData4(state) {
       try {
         const response = await fetch(
-          `${useRuntimeConfig().public.apiURL3}${state}&limit=10`,
+          `${useRuntimeConfig().public.apiURL + "/get-posts?offset="}${state}&limit=10`,
           {
             method: "POST",
             headers: {

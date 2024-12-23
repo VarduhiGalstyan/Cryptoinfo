@@ -14,7 +14,7 @@
                            </div>
                            <div class="column">
                               <div class="views">
-                                 <img style="width: 16px; height: 14px;" src="/assets/img/eye-icon.svg" alt="eye">
+                                 <img style="width: 16px; height: 14px;" src="/_nuxt/assets/img/eye-icon.svg" alt="eye">
                                  <div class="views-number">{{ post.views }}</div>
                               </div>
                            </div>

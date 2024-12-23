@@ -198,7 +198,7 @@ const fetchCryptoPrices = async () => {
 };
 
 const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
-const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/img/ru.svg" : "/assets/img/us.svg"));
+const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/_nuxt/assets/img/ru.svg" : "/_nuxt/assets/img/us.svg"));
 
 
 onMounted(fetchCryptoPrices);
@@ -433,7 +433,12 @@ option{
   margin: 0;
 }
 .light-theme .list-ru-us {
-  margin-top: -510px;
+  margin-top: -430px;
+  margin-right: 20%;
+}
+.dark-theme .list-ru-us {
+  margin-top: -580px !important;
+  margin-right: 13%;
 }
 .list-ru-us {
   display: none;
@@ -728,6 +733,26 @@ button {
     transform: none;
   }
 }
+@media screen and (max-width: 1450px) {
+  .dark-theme .list-ru-us {
+    margin-top: -580px !important;
+    margin-right: 7%;
+  } 
+}
+@media screen and (max-width: 1560px) {
+  .dark-theme .list-ru-us {
+    margin-top: -580px !important;
+    margin-right: 10%;
+  } 
+}
+@media screen and (max-width: 1300px) {
+.dark-theme .list-ru-us{
+  margin-right: 0;
+}
+.centron-right{
+  gap: 47px !important;
+}
+}
 @media screen and (min-width: 1024px) {
   .max {
     padding-left: 16px;
@@ -913,9 +938,6 @@ button {
   gap: inherit;
   color: #fff;
   margin: 0;
-}
-.light-theme .list-ru-us {
-  margin-top: -510px;
 }
 .list-ru-us {
   display: none;

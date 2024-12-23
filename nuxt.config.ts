@@ -6,11 +6,6 @@ export default defineNuxtConfig ({
     public: {
       apiKey: process.env.NUXT_APIKEY,
       apiURL: process.env.NUXT_API,
-      apiKey2: process.env.NUXT_APIKEY2,
-      apiURL2: process.env.NUXT_API,
-      apiUrlLimit: process.env.NUXT_APILimit,
-      apiURL3: process.env.NUXT_APIPOSTS,
-      apiKey3: process.env.NUXT_APIKEY,
     },
   },
 
