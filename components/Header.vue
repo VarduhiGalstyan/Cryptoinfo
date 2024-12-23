@@ -6,7 +6,7 @@
           <div class="top2">
             <div  class="topleft-a">
               <div @click="openTopA">
-                <img src="/assets/img/headerBar-icon.svg" alt="headerBar-icon">
+                <img src="/assets/img/headerBar-icon.svg" alt="headerBar-icon" style="    margin-left: -49%;">
               </div>
               <div class="top2-img">
                 <a href="https://cryptoinfo.me/">
@@ -15,7 +15,7 @@
               </div>
             </div>
             <div class="sidebar"
-              :class="{ open: isOpen }"
+              :class="{ open: isOpen, 'light-theme': !isDarkTheme, }"
             >
               <button class="close-btn" @click="closeTopA"><span style="font-size: 30px;">X</span></button>
 
@@ -306,6 +306,34 @@ const updateSecondInputt = () => {
 
 
 <style scoped>
+@media screen and (max-width: 742px) {
+  .max-top{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+  .topleft-a div img{
+    margin-left: 0 !important;
+  }
+  .topleft-a .top2-img a img{
+    width: 64% !important;
+    padding-left: 128px;
+  }
+  .top-right{
+    padding-left: 0 !important;
+  }
+  .right-top{
+    gap: 222px !important;
+  }
+  .loginbutton{
+    margin-left: -10px;
+  }
+  .right-bottom{
+    text-align: center !important;
+  }
+  
+}
+
 @media screen and (min-width: 1019px) {
   .top2{
     display: none;
@@ -338,9 +366,16 @@ const updateSecondInputt = () => {
   height: 100%;
   background-color: #090112;
   /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); */
-  transition: left 0.3s ease;
+  transition: left 0.3s ease, background-color 0.3s ease;;
+  
   z-index: 1000;
   overflow-y: auto;
+}
+.sidebar.light-theme {
+  background-color: #fff; /* Light theme background */
+}
+.lefttop-a a.light-theme {
+  color: #ccc; /* Light theme text color */
 }
 
 .sidebar.open {
@@ -808,6 +843,7 @@ button {
   width: 25px;
 }
 .max-ru-us {
+  display: flex;
   margin-top: -10px;
   background-color: #ffffff1a;
   border-radius: 11px;
@@ -823,6 +859,7 @@ button {
 }
 .right-bottom {
   text-align: end;
+  margin-right: -24px;
 }
 
 @media screen and (min-width: 1024px) {
