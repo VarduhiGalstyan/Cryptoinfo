@@ -331,7 +331,16 @@ const updateSecondInputt = () => {
   .right-bottom{
     text-align: center !important;
   }
-  
+  .max-crypto{
+    padding-left: 0 !important;
+  }
+  .buttons{
+    flex-direction: column !important;
+  }
+  .info-max{
+    display: flex !important;
+    flex-direction: column !important;
+  }
 }
 
 @media screen and (min-width: 1019px) {
@@ -340,6 +349,7 @@ const updateSecondInputt = () => {
   }
 }
 @media screen and (max-width: 1019px) {
+  
   .top-right{
     padding-left: 40%;
   }
