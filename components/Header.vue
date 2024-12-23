@@ -203,6 +203,11 @@ const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/assets/
 
 onMounted(fetchCryptoPrices);
 
+onMounted(() => {
+  const savedTheme = localStorage.getItem("theme");
+  isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; // Default to dark theme if no value
+  document.body.className = themeClass.value; // Optional: Update body class for global theme styles
+});
 
 const apiStore = useApi();
 await apiStore.fetchData();
