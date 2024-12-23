@@ -117,7 +117,7 @@ a{
   color: #d0d0d0;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     line-height: normal;
 }
 .right{
@@ -185,6 +185,49 @@ a{
     flex-direction: column;
     padding: 57px 213px 72px;
   }
+}
+@media screen and (max-width: 928px) {
+  .max{
+    display: flex;
+    flex-direction: column;
+    padding: 10% 10% 10% 10%;
+  }
+}
+@media screen and (max-width: 756px) {
+  .max{
+    display: flex;
+    flex-direction: column;
+    padding: 10% 4% 10% 4%;
+  }
+}
+@media screen and (max-width: 744px) {
+  .max{
+    display: flex;
+    flex-direction: column;
+    padding: 57px 213px 72px;
+  }
+  .left-info{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .left span{
+    display: none;
+  }
+  .info-name{
+    text-align: center;
+  }
+  .info{
+    width: 209px;
+  }
+  .right{
+    margin-left: -55px;
+    width: 337px;  
+  }
+  .end{
+    text-align: center;
+  }
+
 }
 </style>
 

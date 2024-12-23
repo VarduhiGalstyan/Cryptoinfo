@@ -3,6 +3,40 @@
     <header>
       <div class="max">
         <div class="max-top">
+          <div class="top2">
+            <div  class="topleft-a">
+              <div @click="openTopA">
+                <img src="/assets/img/headerBar-icon.svg" alt="headerBar-icon">
+              </div>
+              <div class="top2-img">
+                <a href="https://cryptoinfo.me/">
+                  <img :src="logoUrl" alt="logo-crypto" style="width: 84%" />
+                </a>
+              </div>
+            </div>
+            <div class="sidebar"
+              :class="{ open: isOpen }"
+            >
+              <button class="close-btn" @click="closeTopA"><span style="font-size: 30px;">X</span></button>
+
+              <div class="lefttop-a">
+                <div class="top2-img">
+                  <a href="https://cryptoinfo.me/">
+                    <img :src="logoUrl" alt="logo-crypto" style="width: 120px" />
+                  </a>
+                </div>
+                <a href="https://cryptoinfo.me/">{{$t("home")}}</a>
+                <a href="https://cryptoinfo.me/services">{{ locale === 'en' ? apiHeader.type1_title_en : apiHeader.type1_title_ru }}</a>
+                <a href="https://cryptoinfo.me/exchanges">{{ locale === 'en' ? apiHeader.type2_title_en : apiHeader.type2_title_ru }}</a>
+                <a href="https://cryptoinfo.me/miners">{{ locale === 'en' ? apiHeader.type3_title_en : apiHeader.type3_title_ru }}</a>
+                <a href="https://cryptoinfo.me/storages">{{ locale === 'en' ? apiHeader.type4_title_en : apiHeader.type4_title_ru }}</a>
+                <a href="https://cryptoinfo.me/faq">{{$t("faq")}}</a>
+                <a href="https://cryptoinfo.me/about-us">{{$t("aboutUs")}}</a>
+                <a href="https://cryptoinfo.me/contacts" class="home2">{{$t("contacts")}}</a>
+              </div>
+            </div>
+          </div>
+
           <div class="top-img">
             <a href="https://cryptoinfo.me/">
               <img :src="logoUrl" alt="logo-crypto" style="width: 84%" />
@@ -160,8 +194,7 @@ import { useI18n } from "vue-i18n";
 import axios from 'axios';
 
 const {t, locale} = useI18n();
-
-
+const isOpen = ref(false);
 const isDarkTheme = ref(true);
 const showLanguageList = ref(false);
 const selectedLanguage = ref("ru");
@@ -172,6 +205,13 @@ const selectedCurrency = ref("usd");
 const secondInputt = ref("");
 const secondInputt2 = ref("");
 const showError = ref(false);
+
+const openTopA = () => {
+  isOpen.value = true;
+};
+const closeTopA = () => {
+  isOpen.value = false;
+};
 
 const cryptos = ref([
   { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png', price: '' },
@@ -266,6 +306,81 @@ const updateSecondInputt = () => {
 
 
 <style scoped>
+@media screen and (min-width: 1019px) {
+  .top2{
+    display: none;
+  }
+}
+@media screen and (max-width: 1019px) {
+  .top-right{
+    padding-left: 40%;
+  }
+  .top-img{
+    display: none;
+  }
+  .top-a{
+    display: none;
+  }
+  .topleft-a {
+    display: flex;
+    gap: 40%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+.sidebar {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 0;
+  left: -100%; 
+  width: 100%;
+  height: 100%;
+  background-color: #090112;
+  /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); */
+  transition: left 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar.open {
+  left: 0; 
+}
+
+.lefttop-a {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.lefttop-a a {
+  margin: 10px 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 11px;
+  transition: color 0.2s;
+  margin-bottom: 25px;
+}
+
+.close-btn {
+  border-color: #a49c9c1a;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  align-items: center;
+  background: #a49c9c1a;
+  border-radius: 11px;
+  cursor: pointer;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+  box-sizing: border-box;
+  padding: 0;
+  transition: all .2s;
+}
+}
+
 select{
   border: none;
   background-color: #ffffff1a;
@@ -638,10 +753,6 @@ button .light-theme button,
 .light-theme .loginbutton {
   color: #170332;
 }
-.light-theme .top-a a {
-  background-color: #f7f3f3;
-  height: 18px;
-}
 .light-theme .button1 {
   background-color: #f5f3f3;
 }
@@ -672,9 +783,7 @@ button .light-theme button,
   margin-top: 20px;
   max-width: 1200px;
 }
-.top-a a {
-  padding-left: 20px;
-}
+
 a,
 button {
   color: #d0d0d0;
@@ -775,11 +884,6 @@ button {
     transform: none;
   }
 }
-</style>
-
-
-
-<style scoped>
 .overlay-input {
   border-radius: 10px;
   background: #ffffff1a;
@@ -1096,26 +1200,7 @@ button {
   justify-content: flex-start;
 }
 
-.header {
-  box-sizing: border-box;
-  padding: 0;
-  transition: all 0.2s;
-  text-rendering: optimizeSpeed;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #d0d0d0;
-  display: block;
-  unicode-bidi: isolate;
-}
-.dark-theme header {
-  background: no-repeat 100% 100% / 65% url(/assets/img/wave-20.webp),
-    no-repeat 50% / cover url(/assets/img/cover.webp);
-  position: relative;
-}
-.light-theme header {
-  background-color: #f7f7f7;
-  background: no-repeat 130% 100% / 80% 112% url(/assets/img/bg_arrow.webp),
-    no-repeat 50% / cover url(/assets/img/home-light-1.webp);
-}
+
 .light-theme a,
 button .light-theme button,
 .light-theme span {
