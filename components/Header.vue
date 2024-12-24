@@ -1,5 +1,11 @@
 <template>
   <div class="header" :class="themeClass">
+    <head>
+      <title>{{ title }}</title>
+      <meta name="description" :content="metaDescription" />
+      <meta name="keywords" :content="metaKeywords" />
+      <link rel="icon" :href="faviconUrl" />
+    </head>
     <header>
       <div class="max">
         <div class="max-top">
@@ -193,7 +199,6 @@ import { useApi } from "~/stores/api";
 import { useI18n } from "vue-i18n";
 import axios from 'axios';
 
-
 const {t, locale} = useI18n();
 const isOpen = ref(false);
 const isDarkTheme = ref(true);
@@ -246,13 +251,17 @@ onMounted(fetchCryptoPrices);
 
 onMounted(() => {
   const savedTheme = localStorage.getItem("theme");
-  isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; // Default to dark theme if no value
-  document.body.className = themeClass.value; // Optional: Update body class for global theme styles
+  isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; 
+  document.body.className = themeClass.value; 
 });
 
 const apiStore = useApi();
 await apiStore.fetchData();
 const apiHeader = apiStore.myHeader.setting;
+const title = computed(() => locale === 'en' ? apiHeader.title_en : apiHeader.title_ru);
+const metaDescription = computed(() => locale === 'en' ? apiHeader.meta_description_en : apiHeader.meta_description_ru);
+const metaKeywords = computed(() => locale === 'en' ? apiHeader.meta_keywords_en : apiHeader.meta_keywords_ru);
+const faviconUrl = apiHeader.favicon;
 const logoUrl = apiHeader.logo;
 
 

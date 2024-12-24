@@ -447,11 +447,7 @@ img{
       padding: 80px 3%;
    }
 }
-@media screen and (max-width: 1637px){
-   .cards-bar{
-      /* padding: 80px 6%; */
-   }
-}
+
 @media screen and (max-width: 1319px) {
     .cards-bar{
         align-items: center;
