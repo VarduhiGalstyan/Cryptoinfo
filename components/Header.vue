@@ -193,6 +193,7 @@ import { useApi } from "~/stores/api";
 import { useI18n } from "vue-i18n";
 import axios from 'axios';
 
+
 const {t, locale} = useI18n();
 const isOpen = ref(false);
 const isDarkTheme = ref(true);
@@ -306,6 +307,7 @@ const updateSecondInputt = () => {
 
 
 <style scoped>
+
 @media screen and (max-width: 742px) {
   .max-top{
     display: flex;
@@ -349,7 +351,9 @@ const updateSecondInputt = () => {
   }
 }
 @media screen and (max-width: 1019px) {
-  
+  .dark-theme {
+    background: no-repeat 50% / cover url(/img/banner-cover/cover.webp?quality=80) !important;
+  }
   .top-right{
     padding-left: 40%;
   }

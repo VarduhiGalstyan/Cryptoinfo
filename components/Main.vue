@@ -484,5 +484,26 @@ img{
       font-size: 12px;
     }
 }
+@media screen and (max-width: 900px) {
+   .card{
+      max-width: 92%;
+   }
+}
+@media screen and (max-width: 744px) {
+   .card{
+      max-width: 90%;
+      height: max-content;
+      flex-direction: column !important;
+   }
+   .cards-contain{
+      padding-left:  10%;
+   }
+   .card-img-div{
+      padding-left: 20%;
+   }
+   .post-info{
+      display: none;
+   }
+}
 </style>
   

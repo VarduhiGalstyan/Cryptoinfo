@@ -1083,7 +1083,7 @@
     "@typescript-eslint/types" "8.18.1"
     eslint-visitor-keys "^4.2.0"
 
-"@unhead/dom@^1.11.11", "@unhead/dom@1.11.13":
+"@unhead/dom@^1.11.11", "@unhead/dom@^1.7.0", "@unhead/dom@1.11.13":
   version "1.11.13"
   resolved "https://registry.npmjs.org/@unhead/dom/-/dom-1.11.13.tgz"
   integrity sha512-8Bpo3e50i49/z0TMiskQk3OqUVJpWOO0cnEEydJeFnjsPczDH76H3mWLvB11cv1B/rjLdBiPgui7yetFta5LCw==
@@ -1091,7 +1091,7 @@
     "@unhead/schema" "1.11.13"
     "@unhead/shared" "1.11.13"
 
-"@unhead/schema@1.11.13":
+"@unhead/schema@^1.7.0", "@unhead/schema@1.11.13":
   version "1.11.13"
   resolved "https://registry.npmjs.org/@unhead/schema/-/schema-1.11.13.tgz"
   integrity sha512-fIpQx6GCpl99l4qJXsPqkXxO7suMccuLADbhaMSkeXnVEi4ZIle+l+Ri0z+GHAEpJj17FMaQdO5n9FMSOMUxkw==
@@ -1106,7 +1106,7 @@
   dependencies:
     "@unhead/schema" "1.11.13"
 
-"@unhead/ssr@^1.11.11":
+"@unhead/ssr@^1.11.11", "@unhead/ssr@^1.7.0":
   version "1.11.13"
   resolved "https://registry.npmjs.org/@unhead/ssr/-/ssr-1.11.13.tgz"
   integrity sha512-LjomDIH8vXbnQQ8UVItmJ52BZBOyK12i1Q4W658X/f0VGtm0z3AulGQIvYla0rFcxAynDygfvWSC7xrlqDtRUw==
@@ -1114,7 +1114,7 @@
     "@unhead/schema" "1.11.13"
     "@unhead/shared" "1.11.13"
 
-"@unhead/vue@^1.11.11":
+"@unhead/vue@^1.11.11", "@unhead/vue@^1.7.0":
   version "1.11.13"
   resolved "https://registry.npmjs.org/@unhead/vue/-/vue-1.11.13.tgz"
   integrity sha512-s5++LqsNM01rkMQwtc4W19cP1fXC81o4YMyL+Kaqh9X0OPLeWnjONAh0U/Z2CIXBqhJHI+DoNXmDACXyuWPPxg==
@@ -1330,6 +1330,16 @@
   version "3.5.13"
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.5.13.tgz"
   integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
+
+"@vueuse/head@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@vueuse/head/-/head-2.0.0.tgz"
+  integrity sha512-ykdOxTGs95xjD4WXE4na/umxZea2Itl0GWBILas+O4oqS7eXIods38INvk3XkJKjqMdWPcpCyLX/DioLQxU1KA==
+  dependencies:
+    "@unhead/dom" "^1.7.0"
+    "@unhead/schema" "^1.7.0"
+    "@unhead/ssr" "^1.7.0"
+    "@unhead/vue" "^1.7.0"
 
 abbrev@1:
   version "1.1.1"
