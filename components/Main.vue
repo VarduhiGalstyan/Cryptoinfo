@@ -55,7 +55,7 @@
                   <div class="card1-top">
                      <div class="card1-logo">
                         <a :href="tgPost.link" class="a">
-                           <nuxt-img :src="'https://api.cryptoinfo.me/uploads/posts/' + tgPost.image" :alt="tgPost.altText"/>
+                           <nuxt-img :src="'https://api.cryptoinfo.me/' + tgPost.image" :alt="tgPost.altText" class="nuxt-img"/>
                         </a>
                      </div>
                      <div class="card1-name">
@@ -158,6 +158,13 @@ export default {
 
 
 <style scoped>
+.card1-top{
+   
+}
+.nuxt-img{
+   width: 30%;
+   border-radius: 12px;
+}
 .light-theme .max-main{
    background: #fff !important;
 }
