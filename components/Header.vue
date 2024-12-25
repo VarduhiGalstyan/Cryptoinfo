@@ -270,7 +270,6 @@ const logoUrl = apiHeader.logo;
 
 const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value;
-
   localStorage.setItem("theme", isDarkTheme.value ? "dark" : "light");
 };
 
