@@ -2,6 +2,9 @@
 export default defineNuxtConfig ({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
+  image: {
+    dir: "assets/img",
+  },
   runtimeConfig: {
     public: {
       apiKey: process.env.NUXT_APIKEY,
@@ -9,7 +12,8 @@ export default defineNuxtConfig ({
     },
   },
 
-  modules: ["@pinia/nuxt", "@nuxtjs/i18n"],
+
+  modules: ["@pinia/nuxt", "@nuxtjs/i18n", "@nuxt/image"],
   i18n: {
     lazy: true,
     langDir: "locales",

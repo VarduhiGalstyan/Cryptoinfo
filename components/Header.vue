@@ -11,8 +11,8 @@
         <div class="max-top">
           <div class="top2">
             <div  class="topleft-a">
-              <div @click="openTopA">
-                <img src="/assets/img/headerBar-icon.svg" alt="headerBar-icon" style="    margin-left: -49%;">
+              <div @click="openTopA" class="headerBar">
+                <nuxt-img src="headerBar-icon.svg" alt="headerBar-icon" style="width: 20px;"/>
               </div>
               <div class="top2-img">
                 <a href="https://cryptoinfo.me/">
@@ -84,7 +84,7 @@
                 </button>
                 <div>
                   <div @click="toggleLanguageList" class="max-ru-us">
-                    <img :src="languageFlag" alt="ru-us" class="ru-us" />
+                    <nuxt-img :src="languageFlag" alt="ru-us" class="ru-us" />
                     <img src="/assets/img/arrow.svg" alt="flag" class="flag" />
                   </div>
                   <div class="list-ru-us" :class="{ show: showLanguageList }">
@@ -120,7 +120,7 @@
               <div class="input">
                 <input type="number" v-model.number="secondInputt" @change="updateFirstInputt" />
               </div>
-              <img
+              <nuxt-img
                 :src="cryptos.find(crypto => crypto.id === selectedCrypto)?.img"
                 alt="selected-crypto"
                 style=" width: 30px; height: 30px; margin-left: -10px;"
@@ -148,7 +148,7 @@
             <div class="info-max">
               <div class="info-left" v-for="crypto in cryptos" :key="crypto.id">
                 <div style="display: flex; gap: 10px;">
-                  <img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 40px;"/>
+                  <nuxt-img :src="crypto.img" alt="logo" class="crypto-logo"  style="width: 40px;"/>
                   <div class="namee-nm">
                     <div  :class="{ cryptoName2 : !isDarkTheme, cryptoName:isDarkTheme}" >{{ crypto.name }}</div>
                     <div :class="{ cryptosymbol2 : !isDarkTheme, cryptosymbol:isDarkTheme}" >{{ crypto.symbol }}</div>
@@ -220,11 +220,11 @@ const closeTopA = () => {
 };
 
 const cryptos = ref([
-  { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', img: '/_nuxt/assets/img/bitcoinLogo.svg', price: '' },
-  { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', img: '/_nuxt/assets/img/ethereum-eth-logo.png', price: '' },
-  { id: 'monero', name: 'Monero', symbol: 'XMR', img: '/_nuxt/assets/img/monero-xmr-logo.png', price: '' },
-  { id: 'tron', name: 'Tron', symbol: 'TRX', img: '/_nuxt/assets/img/tron-trx-logo.png', price: '' },
-  { id: 'litecoin', name: 'Litecoin', symbol: 'LTC', img: '/_nuxt/assets/img/litecoin-ltc-logo.png', price: '' },
+  { id: 'bitcoin', name: 'Bitcoin', symbol: 'BTC', img: 'bitcoinLogo.svg', price: '' },
+  { id: 'ethereum', name: 'Ethereum', symbol: 'ETH', img: 'ethereum-eth-logo.png', price: '' },
+  { id: 'monero', name: 'Monero', symbol: 'XMR', img: 'monero-xmr-logo.png', price: '' },
+  { id: 'tron', name: 'Tron', symbol: 'TRX', img: 'tron-trx-logo.png', price: '' },
+  { id: 'litecoin', name: 'Litecoin', symbol: 'LTC', img: 'litecoin-ltc-logo.png', price: '' },
 ]);
 
 const router = useRouter();
@@ -244,12 +244,12 @@ const fetchCryptoPrices = async () => {
 };
 
 const themeClass = computed(() => (isDarkTheme.value ? "dark-theme" : "light-theme"));
-const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/_nuxt/assets/img/ru.svg" : "/_nuxt/assets/img/us.svg"));
+const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "ru.svg" : "us.svg"));
 
 
 onMounted(fetchCryptoPrices);
 
-onMounted(() => { //onMounted
+onMounted(() => { //onMounted watch
   const savedTheme = localStorage.getItem("theme");
   isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; 
   document.body.className = themeClass.value; 
@@ -317,7 +317,9 @@ const updateSecondInputt = () => {
 
 <style scoped>
 
+
 @media screen and (max-width: 742px) {
+
   .max-top{
     display: flex;
     flex-direction: column;
@@ -360,6 +362,14 @@ const updateSecondInputt = () => {
   }
 }
 @media screen and (max-width: 1019px) {
+
+  .headerBar{
+    margin-top: -10px;
+    background-color: #ffffff1a;
+    border-radius: 11px;
+    padding: 12px;
+    height: 15px;
+  }
   .dark-theme {
     background: no-repeat 50% / cover url(/img/banner-cover/cover.webp?quality=80) !important;
   }

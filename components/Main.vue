@@ -6,15 +6,15 @@
                <div class="cards-contain">
                   <div class="card" v-for="post in posts" :key="post.id">
                      <div class="card-img-div">
-                        <img  :src="'https://api.cryptoinfo.me/uploads/posts/' + post.img"
-                         class="card-img" alt="card-img">
+                        <nuxt-img  :src="'https://api.cryptoinfo.me/uploads/posts/' + post.img"
+                         class="card-img" alt="card-img"/>
                         <div class="post-info">
                            <div class="column">
                               <div class="day">{{ post.date }}</div>
                            </div>
                            <div class="column">
                               <div class="views">
-                                 <img style="width: 16px; height: 14px;" src="../assets/img/eye-icon.svg" alt="eye">
+                                 <nuxt-img style="width: 16px; height: 14px;" src="eye-icon.svg" alt="eye"/>
                                  <div class="views-number">{{ post.views }}</div>
                               </div>
                            </div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="text-buttons">
                            <div class="cisit">
-                              <img src="../assets/img/visit-icon.svg" alt="visit-icon" class="visit-icon">
+                              <nuxt-img src="visit-icon.svg" alt="visit-icon" class="visit-icon"/>
                            </div>
                            <div class="links">
                               <div class="link" v-for="tag in post.tags" :key="tag" > {{ tag }}</div>
@@ -46,8 +46,8 @@
             </div>
          </div>
          <div class="bar">
-            <div class="side" style="display: flex;">
-               <img src="../assets/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
+            <div class="side" style="display: flex; gap: 10px;">
+               <nuxt-img src="tg-icon.svg" alt="tg-icon" class="tg-icon"/>
                <h2 class="title">Новости из тематических телеграм каналов</h2>
             </div>
             <div>
@@ -55,7 +55,7 @@
                   <div class="card1-top">
                      <div class="card1-logo">
                         <a :href="tgPost.link" class="a">
-                           <img :src="'https://api.cryptoinfo.me/uploads/posts/' + tgPost.image" :alt="tgPost.altText">
+                           <nuxt-img :src="'https://api.cryptoinfo.me/uploads/posts/' + tgPost.image" :alt="tgPost.altText"/>
                         </a>
                      </div>
                      <div class="card1-name">
@@ -71,7 +71,7 @@
                      </div>
                      <div class="card1-column">
                         <div class="card1-views">
-                           <img src="../assets/img/eye-icon.svg" alt="eye">
+                           <nuxt-img src="eye-icon.svg" alt="eye"/>
                            <div class="eye-number">{{ tgPost.views }}</div>
                         </div>
                      </div>

@@ -9,11 +9,11 @@
         <div class="info">
           <div class="info-name">{{ $t('contactUs') }}</div>
           <div class="email-tg">
-            <img src="../assets/img/email-icon-512x408-pcaze3fg.png" alt="email-logo" v-if="contact_email" />
+            <nuxt-img src="message-icon.svg" alt="email-logo" v-if="contact_email" />
             <a href="#">{{ contact_email }}</a>
           </div>
           <div class="email-tg">
-            <img src="/assets/img/tg-icon.svg" alt="tg" v-if="infoHeader" />
+            <nuxt-img src="tg-icon.svg" alt="tg" v-if="infoHeader" style="width: 25px !important; margin-left: -30px;"/>
             <span>{{ infoHeader }}</span>
           </div>
         </div>
@@ -194,6 +194,9 @@ a{
     display: flex;
     flex-direction: column;
     padding: 57px 213px 72px;
+  }
+  .left-info{
+    margin-bottom: 30px;
   }
 }
 @media screen and (max-width: 928px) {
