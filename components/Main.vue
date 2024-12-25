@@ -14,7 +14,7 @@
                            </div>
                            <div class="column">
                               <div class="views">
-                                 <img style="width: 16px; height: 14px;" src="/_nuxt/assets/img/eye-icon.svg" alt="eye">
+                                 <img style="width: 16px; height: 14px;" src="../assets/img/eye-icon.svg" alt="eye">
                                  <div class="views-number">{{ post.views }}</div>
                               </div>
                            </div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="text-buttons">
                            <div class="cisit">
-                              <img src="/assets/img/visit-icon.svg" alt="visit-icon" class="visit-icon">
+                              <img src="../assets/img/visit-icon.svg" alt="visit-icon" class="visit-icon">
                            </div>
                            <div class="links">
                               <div class="link" v-for="tag in post.tags" :key="tag" > {{ tag }}</div>
@@ -46,8 +46,8 @@
             </div>
          </div>
          <div class="bar">
-            <div class="side">
-               <img src="/assets/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
+            <div class="side" style="display: flex;">
+               <img src="../assets/img/tg-icon.svg" alt="tg-icon" class="tg-icon">
                <h2 class="title">Новости из тематических телеграм каналов</h2>
             </div>
             <div>
@@ -71,7 +71,7 @@
                      </div>
                      <div class="card1-column">
                         <div class="card1-views">
-                           <img src="/assets/img/eye-icon.svg" alt="eye">
+                           <img src="../assets/img/eye-icon.svg" alt="eye">
                            <div class="eye-number">{{ tgPost.views }}</div>
                         </div>
                      </div>
@@ -158,6 +158,31 @@ export default {
 
 
 <style scoped>
+.light-theme .max-main{
+   background: #fff !important;
+}
+.light-theme .card, .light-theme .bar{
+   border: 0.5px solid #0003;
+   background: #fff;
+}
+.light-theme .day{
+   color: #0c0c0c;
+}
+.light-theme .card1-data,
+.light-theme .post-info{
+   background: #f7f7f7;
+}
+.light-theme .text-name,
+.light-theme .views-number, 
+.light-theme .text-info, 
+.light-theme .link,
+.light-theme .name-card1,
+.light-theme .card1-day,
+.light-theme .eye-number,
+.light-theme .title{
+   color: #0c0c0c;
+}
+
 .card1-text{
    color: #d0d0d0;
 }

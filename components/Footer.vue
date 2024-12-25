@@ -51,6 +51,16 @@ onMounted(() => {
 });
 </script>
 <style scoped>
+.light-theme footer{
+  background: #e6e6e6;}
+  .light-theme .left span{
+    color: #16141f;
+  }
+  .light-theme .info-name,
+  .light-theme  .email-tg a,
+  .light-theme .email-tg span{
+    color: #16141f;
+  }
 footer{
   background: #16141f;
   min-height: 250px;
@@ -65,7 +75,7 @@ footer{
   padding: 57px 20px 72px;
   margin: 0 auto;
   max-width: 1306px;
-  gap: 80px;
+  gap: 15%;
 }
 .left-info{
   display: flex;
@@ -102,7 +112,7 @@ footer{
   font-weight: 700;
   line-height: normal;
   text-transform: uppercase;
-  width: 100%;
+  width: max-content;
 }
 .email-tg{
   align-items: center;

@@ -249,7 +249,7 @@ const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "/_nuxt/a
 
 onMounted(fetchCryptoPrices);
 
-onMounted(() => {
+watch(() => { //onMounted
   const savedTheme = localStorage.getItem("theme");
   isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; 
   document.body.className = themeClass.value; 
