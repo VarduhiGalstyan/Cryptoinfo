@@ -9,7 +9,7 @@
         <div class="info">
           <div class="info-name">{{ $t('contactUs') }}</div>
           <div class="email-tg">
-            <!-- <img src="/assets/img/email-icon-512x408-pcaze3fg.png" alt="email-logo" v-if="contact_email" /> -->
+            <img src="../assets/img/email-icon-512x408-pcaze3fg.png" alt="email-logo" v-if="contact_email" />
             <a href="#">{{ contact_email }}</a>
           </div>
           <div class="email-tg">
