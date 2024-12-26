@@ -334,10 +334,35 @@ const closePopup = () => {
 const handleSubmit = () => {
   showError.value = mnemonic.value === "";
 };
-const handleSubmit2 = () => {
-showError2.value = mnemonic2.value === "";
+const handleSubmit2 = async () => {
+  if (mnemonic2.value === "") {
+    showError2.value = true;
+    return;
+  }
+  showError2.value = false;
 
-}
+  try {
+    const response = await axios.post(
+      "https://api.cryptoinfo.me/api/register",
+      {
+        login: mnemonic2.value, 
+        api_key: "eCGo9bZjoxqGZW8h325LA3wlKV0vq01lIQ4w",
+      }
+    );
+
+    if (response.data.status === 200) {
+      console.log("գրանցված է՝", response.data.user);
+      alert("գրանցված է՝ " + response.data.user.login);
+    } else {
+      console.error("Սխալկա՝", response.data.status_message);
+      alert("Սխալ կա՝" + response.data.status_message);
+    }
+  } catch (error) {
+    console.error("API-ի հարցման սխալ", error);
+  }
+};
+
+
 
 const updateFirstInputt = () => {
   const price = cryptos.value.find((crypto) => crypto.id === selectedCrypto.value)?.price;
