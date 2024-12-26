@@ -11,6 +11,11 @@
   "overlayfooter": "Do not have an account?",
   "end": "Register!",
 
+  "register": "Sign Up",
+  "username": "Username",
+  "end2": "Sign In!",
+  "fields2": "Name field is required.",
+
     "contactUs": "Connect with us",
     "allRightsReserved": "All Rights Reserved",
     "subscribe": "Subscribe",

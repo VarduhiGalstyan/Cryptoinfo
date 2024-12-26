@@ -165,24 +165,54 @@
               <button class="overlay-close" @click="closePopup">
                 <img src="/assets/img/close.DslCkta_.png" class="close" alt="close" />
               </button>
-              <h2 class="overlay-name">{{$t( "login" )}}</h2>
+              <h2 class="overlay-name">
+                {{ isRegisterMode ? $t("register") : $t("login") }}
+              </h2>
               <p class="overlay-text"></p>
-              <div class="overlay-div">
-                <p class="overlay-text">{{$t( "enterMnemonic" )}}</p>
-                <input type="text" v-model="mnemonic" class="overlay-input" />
-                <span class="overlay-span" v-if="showError">{{$t( "fields" )}}</span>
+
+              <div v-if="isRegisterMode">
+                <div class="overlay-div">
+                  <p class="overlay-text">
+                    {{ $t("username") }}
+                  </p>
+                  <input type="text" v-model="mnemonic2" class="overlay-input" />
+                  <span class="overlay-span" v-if="showError2">
+                    {{ $t("fields2") }}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  @click="handleSubmit2"
+                  class="overlay-button"
+                  style="margin-top: 50px"
+                >
+                  {{$t( "register" )}}
+                </button>
               </div>
-              <button
-                type="button"
-                @click="handleSubmit"
-                class="overlay-button"
-                style="margin-top: 50px"
-              >
-                {{$t( "login" )}}
-              </button>
+              <div v-else>
+                <div class="overlay-div">
+                  <p class="overlay-text">
+                    {{ $t("enterMnemonic") }}
+                  </p>
+                  <input type="text" v-model="mnemonic" class="overlay-input" />
+                  <span class="overlay-span" v-if="showError">
+                    {{ $t("fields") }}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  @click="handleSubmit"
+                  class="overlay-button"
+                  style="margin-top: 50px"
+                >
+                  {{$t( "login" )}}
+                </button>
+              </div>
               <div class="overlay-footer">
                 <p style="margin: 0">{{$t( "overlayfooter" )}}</p>
-                <button>{{ $t("end") }}</button>
+                <button @click="toggleRegisterMode">
+                  {{ isRegisterMode ? $t("end2") : $t("end") }}
+                </button>
               </div>
             </div>
           </div>
@@ -206,17 +236,25 @@ const showLanguageList = ref(false);
 const selectedLanguage = ref("ru");
 const showPopup = ref(false);
 const mnemonic = ref("");
+const mnemonic2 = ref("");
 const selectedCrypto = ref("bitcoin");
 const selectedCurrency = ref("usd");
 const secondInputt = ref("");
 const secondInputt2 = ref("");
 const showError = ref(false);
+const showError2 = ref(false);
+const isRegisterMode = ref(false);
+
+
 
 const openTopA = () => {
   isOpen.value = true;
 };
 const closeTopA = () => {
   isOpen.value = false;
+};
+const toggleRegisterMode = () => {
+  isRegisterMode.value = !isRegisterMode.value;
 };
 
 const cryptos = ref([
@@ -296,6 +334,10 @@ const closePopup = () => {
 const handleSubmit = () => {
   showError.value = mnemonic.value === "";
 };
+const handleSubmit2 = () => {
+showError2.value = mnemonic2.value === "";
+
+}
 
 const updateFirstInputt = () => {
   const price = cryptos.value.find((crypto) => crypto.id === selectedCrypto.value)?.price;
