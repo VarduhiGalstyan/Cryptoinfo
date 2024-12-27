@@ -259,6 +259,7 @@ const selectedLanguage = ref("ru");
 const showPopup = ref(false);
 const mnemonic = ref("");
 const mnemonic2 = ref("");
+const mnemonic3 = ref("");
 const selectedCrypto = ref("bitcoin");
 const selectedCurrency = ref("usd");
 const secondInputt = ref("");
@@ -324,10 +325,6 @@ const metaKeywords = computed(() => locale === 'en' ? apiHeader.meta_keywords_en
 const faviconUrl = apiHeader.favicon;
 const logoUrl = apiHeader.logo;
 
-
-
-
-
 const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value;
   localStorage.setItem("theme", isDarkTheme.value ? "dark" : "light");
@@ -375,6 +372,7 @@ const handleSubmit2 = async () => {
     if (response.data.status === 200) {
       console.log("գրանցված է՝", response.data.user);
       alert("գրանցված է՝ " + response.data.user.login);
+      mnemonic3.value = response.data.user.mnemonics;
       isRegistered.value = true; 
     } else {
       console.error("Սխալկա՝", response.data.status_message);
