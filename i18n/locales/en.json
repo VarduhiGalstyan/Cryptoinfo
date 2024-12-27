@@ -16,6 +16,10 @@
   "end2": "Sign In!",
   "fields2": "Name field is required.",
 
+  "registered": "You are registered!",
+  "mnemonmics": "Please remember this mnemonics:",
+  "complete": "Complete registration",
+
     "contactUs": "Connect with us",
     "allRightsReserved": "All Rights Reserved",
     "subscribe": "Subscribe",

@@ -165,53 +165,75 @@
               <button class="overlay-close" @click="closePopup">
                 <img src="/assets/img/close.DslCkta_.png" class="close" alt="close" />
               </button>
-              <h2 class="overlay-name">
-                {{ isRegisterMode ? $t("register") : $t("login") }}
-              </h2>
-              <p class="overlay-text"></p>
+              <div v-if="!isRegistered">  
+                <h2 class="overlay-name">
+                  {{ isRegisterMode ? $t("register") : $t("login") }}
+                </h2>
+                <p class="overlay-text"></p>
 
-              <div v-if="isRegisterMode">
-                <div class="overlay-div">
-                  <p class="overlay-text">
-                    {{ $t("username") }}
-                  </p>
-                  <input type="text" v-model="mnemonic2" class="overlay-input" />
-                  <span class="overlay-span" v-if="showError2">
-                    {{ $t("fields2") }}
-                  </span>
+                <div v-if="isRegisterMode">
+                  <div class="overlay-div">
+                    <p class="overlay-text">
+                      {{ $t("username") }}
+                    </p>
+                    <input type="text" v-model="mnemonic2" class="overlay-input" />
+                    <span class="overlay-span" v-if="showError2">
+                      {{ $t("fields2") }}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    @click="handleSubmit2"
+                    class="overlay-button"
+                    style="margin-top: 50px"
+                  >
+                    {{$t( "register" )}}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  @click="handleSubmit2"
-                  class="overlay-button"
-                  style="margin-top: 50px"
-                >
-                  {{$t( "register" )}}
-                </button>
+                <div v-else>
+                  <div class="overlay-div">
+                    <p class="overlay-text">
+                      {{ $t("enterMnemonic") }}
+                    </p>
+                    <input type="text" v-model="mnemonic" class="overlay-input" />
+                    <span class="overlay-span" v-if="showError">
+                      {{ $t("fields") }}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    @click="handleSubmit"
+                    class="overlay-button"
+                    style="margin-top: 50px"
+                  >
+                    {{$t( "login" )}}
+                  </button>
+                </div>
+                <div class="overlay-footer">
+                  <p style="margin: 0">{{$t( "overlayfooter" )}}</p>
+                  <button @click="toggleRegisterMode">
+                    {{ isRegisterMode ? $t("end2") : $t("end") }}
+                  </button>
+                </div>
               </div>
               <div v-else>
+                <h2 class="overlay-name">
+                  {{ $t("registered") }}
+                </h2>
+                <p class="overlay-text"></p>
                 <div class="overlay-div">
                   <p class="overlay-text">
-                    {{ $t("enterMnemonic") }}
+                    {{ $t("mnemonmics") }}
                   </p>
-                  <input type="text" v-model="mnemonic" class="overlay-input" />
-                  <span class="overlay-span" v-if="showError">
-                    {{ $t("fields") }}
-                  </span>
+                  <input type="text" v-model="mnemonic3" class="overlay-input" />
                 </div>
                 <button
                   type="button"
-                  @click="handleSubmit"
+                  @click="handleSubmit3"
                   class="overlay-button"
                   style="margin-top: 50px"
                 >
-                  {{$t( "login" )}}
-                </button>
-              </div>
-              <div class="overlay-footer">
-                <p style="margin: 0">{{$t( "overlayfooter" )}}</p>
-                <button @click="toggleRegisterMode">
-                  {{ isRegisterMode ? $t("end2") : $t("end") }}
+                  {{$t( "complete" )}}
                 </button>
               </div>
             </div>
@@ -244,7 +266,7 @@ const secondInputt2 = ref("");
 const showError = ref(false);
 const showError2 = ref(false);
 const isRegisterMode = ref(false);
-
+const isRegistered = ref(false);
 
 
 const openTopA = () => {
@@ -353,6 +375,7 @@ const handleSubmit2 = async () => {
     if (response.data.status === 200) {
       console.log("գրանցված է՝", response.data.user);
       alert("գրանցված է՝ " + response.data.user.login);
+      isRegistered.value = true; 
     } else {
       console.error("Սխալկա՝", response.data.status_message);
       alert("Սխալ կա՝" + response.data.status_message);
