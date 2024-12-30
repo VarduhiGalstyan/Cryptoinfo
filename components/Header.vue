@@ -114,10 +114,16 @@
             </div>
           </div>
         </div>
-        <div v-if="isRegistered3">
+        <div v-if="isRegistered3" style="display: block;  text-align: justify;  margin-left: -50%;">
           <div>
             <p>Personal data</p>
-            <!-- <p>Username: {{ personalData.username }}</p> -->
+            <p></p>
+            <p><nuxt-img  src="no_avatar.D7pqop-r.jpg" alt="no_avatar.D7pqop-r.jpg" style="width: 25%;"/></p>
+            <p>Display name: </p>
+            <p>Username: {{ personalData.username }}</p>
+            <p>Email: </p>
+            <p>Telegram: </p>
+            <p><a href="#"></a>Change</p>
           </div>
         </div>
         <div v-else class="max-crypto">
@@ -274,7 +280,7 @@ const showError = ref(false);
 const showError2 = ref(false);
 const isRegisterMode = ref(false);
 const isRegistered = ref(false);
-// const isRegistered3 = ref(false);
+const isRegistered3 = ref(false);
 
 
 const personalData = ref({
@@ -395,27 +401,28 @@ const handleSubmit2 = async () => {
 };
 
 const handleSubmit3 = async () => {
-  // if (mnemonic2.value === "") {
-  //   showError2.value = true;
-  //   return;
-  // }
-  // showError2.value = false;
-
   try {
+    alert("Ուղարկվում է mnemonic:"+ mnemonic3.value); 
+
     const response = await axios.post(
       "https://api.cryptoinfo.me/api/login-user",
       {
-        mnemonic: mnemonic3.value, 
+        mnemonics: mnemonic3.value, 
         api_key: "eCGo9bZjoxqGZW8h325LA3wlKV0vq01lIQ4w",
       }
-    );    
-    // if (response.data.status === 200) {
-    //   console.log("Success:", response.data.user);
-    //   isRegistered3.value = true; 
-    //   console.log("User login:", response.data.user.login); 
-    // } else {
-    //   alert("Սխալ կա՝" + response.data.status_message);
-    // }
+    );   
+    if (response.data.status === 200 && response.data.status_message === "true") {
+      console.log("Հաջողություն:", response.data);
+      alert("Հաջողությամբ մուտք գործեցիք!");
+      isRegistered3.value = true; 
+      showPopup.value = false; 
+      personalData.value.username = mnemonic2.value;
+
+    } else {
+      console.error("Սխալ:", response.data);
+      alert("Սխալ: " + (response.data.errors?.mnemonics?.[0]));
+    } 
+    
   } catch (error) {
     console.error("Error making the request:", error);
   }
