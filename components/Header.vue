@@ -63,9 +63,17 @@
               <div class="right-top">
                 <div class="loginmax">
                   <div class="loginname">
-                    <button @click="togglePopup" class="loginbutton">
+                    <button v-if="!isRegistered3" @click="togglePopup" class="loginbutton">
                       {{$t( "enter" )}}
                     </button>
+                    <div v-else>
+                      <button @click="viewAccount" class="account-button">
+                        Account
+                      </button>
+                      <button @click="logout" class="logout-button">
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <button @click="toggleTheme" class="change-color">
@@ -282,6 +290,17 @@ const isRegisterMode = ref(false);
 const isRegistered = ref(false);
 const isRegistered3 = ref(false);
 
+const viewAccount = () => {
+  console.log('Account details viewed');
+  // Ակտիվացնել հաշվի մանրամասները կամ որևէ այլ գործողություն
+};
+
+// Օգտատեր դուրս գալիս համակարգից
+const logout = () => {
+  isRegistered3.value = false;  // Հանում ենք գրանցման նշանը
+  personalData.value.username = null; // Մաքրում ենք օգտատերի անունը
+  alert('Դուք դուրս եկաք համակարգից');
+};
 
 const personalData = ref({
   username: null,
@@ -360,7 +379,10 @@ const selectLanguage = (language) => {
 };
 
 const togglePopup = () => {
+  // showPopup.value = true
   showPopup.value = !showPopup.value;
+  isRegistered.value = false;
+  isRegisterMode.value = false;
 };
 
 const closePopup = () => {
