@@ -292,13 +292,11 @@ const isRegistered3 = ref(false);
 
 const viewAccount = () => {
   console.log('Account details viewed');
-  // Ակտիվացնել հաշվի մանրամասները կամ որևէ այլ գործողություն
 };
 
-// Օգտատեր դուրս գալիս համակարգից
 const logout = () => {
-  isRegistered3.value = false;  // Հանում ենք գրանցման նշանը
-  personalData.value.username = null; // Մաքրում ենք օգտատերի անունը
+  isRegistered3.value = false;  
+  personalData.value.username = null; 
   alert('Դուք դուրս եկաք համակարգից');
 };
 
@@ -346,7 +344,7 @@ const languageFlag = computed(() => (selectedLanguage.value === "ru" ? "ru.svg" 
 
 onMounted(fetchCryptoPrices);
 
-onMounted(() => { //onMounted watch
+onMounted(() => { 
   const savedTheme = localStorage.getItem("theme");
   isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; 
   document.body.className = themeClass.value; 
@@ -379,7 +377,6 @@ const selectLanguage = (language) => {
 };
 
 const togglePopup = () => {
-  // showPopup.value = true
   showPopup.value = !showPopup.value;
   isRegistered.value = false;
   isRegisterMode.value = false;
@@ -389,8 +386,27 @@ const closePopup = () => {
   showPopup.value = false;
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   showError.value = mnemonic.value === "";
+  if (mnemonic3.value !== "") {
+    try {
+      const response = await axios.get(
+        'https://api.cryptoinfo.me/api/login-user');
+      if (response.data.user.login !== "") {
+        personalData.value.username = response.data.user.login;
+      } else {
+        showError.value = true; 
+        console.error('Login data not found');
+      }
+    } catch (error) {
+      showError.value = true; 
+      console.error('API error:', error);
+    }
+    isRegistered3.value = true;   
+    showPopup.value = false;  
+  } else {
+    showError.value = true;       
+  }
 };
 const handleSubmit2 = async () => {
   if (mnemonic2.value === "") {
