@@ -71,7 +71,7 @@
                         {{$t( "account" )}}
                       </a>
                       <a @click="logout" class="logout-button">
-                        {{$t( "logout" )}}
+                        {{$t( "ogout" )}}
                       </a>
                     </div>
                   </div>
@@ -128,10 +128,10 @@
             <p></p>
             <p><nuxt-img  src="no_avatar.D7pqop-r.jpg" alt="no_avatar.D7pqop-r.jpg" style="width: 25%;"/></p>
             <p>{{$t( "display" )}}</p>
-            <p>{{$t( "usernamee" )}} {{ personalData.username }}</p>
+            <p>{{$t( "usernamee" )}} <small style="font-weight: 500; font-size: 16px;">{{ personalData.username }}</small></p>
             <p>{{$t( "emaill" )}}</p>
             <p>{{$t( "telegramm" )}} </p>
-            <p><a href="#"></a>{{$t( "changee" )}}</p>
+            <a href="#">{{$t( "changee" )}}</a>
           </div>
         </div>
         <div v-else class="max-crypto">
