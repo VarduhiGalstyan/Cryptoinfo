@@ -20,6 +20,16 @@
   "mnemonmics": "Please remember this mnemonics:",
   "complete": "Complete registration",
 
+  "account": "Account",
+  "logout": "Logout",
+  "personal": "Personal data",
+  "display": "Display name:",
+  "usernamee": "Username:",
+  "emaill": "Email:",
+  "telegramm": "Telegram:",
+  "changee": "Change",
+
+
     "contactUs": "Connect with us",
     "allRightsReserved": "All Rights Reserved",
     "subscribe": "Subscribe",

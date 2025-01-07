@@ -20,6 +20,15 @@
   "mnemonmics": "szdfcgbjkml",
   "Complete": "dcgfbhjnjhbjgfc",
 
+  "account": "Кабинет",
+  "logout": "Выйти",
+  "personal": "Личные данные",
+  "display": "Имя профиля:",
+  "usernamee": "Имя пользователя:",
+  "emaill": "Эл. почта:",
+  "telegramm": "Телеграм:",
+  "changee": "Изменить",
+
     "contactUs": "Связаться с нами",
     "allRightsReserved": "Все права защищены",
     "subscribe": "Подписаться",

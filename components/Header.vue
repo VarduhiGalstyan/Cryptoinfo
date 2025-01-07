@@ -68,10 +68,10 @@
                     </button>
                     <div v-else>
                       <a @click="viewAccount" class="account-button">
-                        Account
+                        {{$t( "account" )}}
                       </a>
                       <a @click="logout" class="logout-button">
-                        Logout
+                        {{$t( "logout" )}}
                       </a>
                     </div>
                   </div>
@@ -123,15 +123,15 @@
           </div>
         </div>
         <div v-if="isRegistered3" style="display: block;  text-align: justify;  margin-left: -50%;">
-          <div>
-            <p>Personal data</p>
+          <div class="personal">
+            <p>{{$t( "personal" )}}</p>
             <p></p>
             <p><nuxt-img  src="no_avatar.D7pqop-r.jpg" alt="no_avatar.D7pqop-r.jpg" style="width: 25%;"/></p>
-            <p>Display name: </p>
-            <p>Username: {{ personalData.username }}</p>
-            <p>Email: </p>
-            <p>Telegram: </p>
-            <p><a href="#"></a>Change</p>
+            <p>{{$t( "display" )}}</p>
+            <p>{{$t( "usernamee" )}} {{ personalData.username }}</p>
+            <p>{{$t( "emaill" )}}</p>
+            <p>{{$t( "telegramm" )}} </p>
+            <p><a href="#"></a>{{$t( "changee" )}}</p>
           </div>
         </div>
         <div v-else class="max-crypto">
@@ -500,6 +500,9 @@ const updateSecondInputt = () => {
 </script>
 
 <style scoped>
+.personal p{
+  font-weight: 1000;
+}
 
 @media screen and (max-width: 742px) {
 
@@ -581,17 +584,16 @@ const updateSecondInputt = () => {
   width: 100%;
   height: 100%;
   background-color: #090112;
-  /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); */
   transition: left 0.3s ease, background-color 0.3s ease;;
   
   z-index: 1000;
   overflow-y: auto;
 }
 .sidebar.light-theme {
-  background-color: #fff; /* Light theme background */
+  background-color: #fff; 
 }
 .lefttop-a a.light-theme {
-  color: #ccc; /* Light theme text color */
+  color: #ccc; 
 }
 
 .sidebar.open {
@@ -769,13 +771,11 @@ option{
   margin-top: -20px;
 }
 .list-ru.active {
-  /* background-color: #4d4d4d; */
   position: relative;
 }
 
 .list-ru.active::before {
   content: "";
-  /* position: absolute; */
   left: -8px;
   top: 50%;
   transform: translateY(-50%);
