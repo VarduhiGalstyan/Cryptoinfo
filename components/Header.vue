@@ -67,12 +67,12 @@
                       {{$t( "enter" )}}
                     </button>
                     <div v-else>
-                      <button @click="viewAccount" class="account-button">
+                      <a @click="viewAccount" class="account-button">
                         Account
-                      </button>
-                      <button @click="logout" class="logout-button">
+                      </a>
+                      <a @click="logout" class="logout-button">
                         Logout
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -297,7 +297,7 @@ const viewAccount = () => {
 const logout = () => {
   isRegistered3.value = false;  
   personalData.value.username = null; 
-  alert('Դուք դուրս եկաք համակարգից');
+  console.log('Դուք դուրս եկաք համակարգից');
 };
 
 const personalData = ref({
@@ -426,12 +426,11 @@ const handleSubmit2 = async () => {
 
     if (response.data.status === 200) {
       console.log("գրանցված է՝", response.data.user);
-      alert("գրանցված է՝ " + response.data.user.login);
       mnemonic3.value = response.data.user.mnemonics;
       isRegistered.value = true; 
     } else {
       console.error("Սխալկա՝", response.data.status_message);
-      alert("Սխալ կա՝" + response.data.status_message);
+      console.log("Սխալ կա՝" + response.data.status_message);
     }
   } catch (error) {
     console.error("API-ի հարցման սխալ", error);
@@ -440,7 +439,7 @@ const handleSubmit2 = async () => {
 
 const handleSubmit3 = async () => {
   try {
-    alert("Ուղարկվում է mnemonic:"+ mnemonic3.value); 
+    console.log("Ուղարկվում է mnemonic:"+ mnemonic3.value); 
 
     const response = await axios.post(
       "https://api.cryptoinfo.me/api/login-user",
@@ -451,14 +450,14 @@ const handleSubmit3 = async () => {
     );   
     if (response.data.status === 200 && response.data.status_message === "true") {
       console.log("Հաջողություն:", response.data);
-      alert("Հաջողությամբ մուտք գործեցիք!");
+      console.log("Հաջողությամբ մուտք գործեցիք!");
       isRegistered3.value = true; 
       showPopup.value = false; 
       personalData.value.username = mnemonic2.value;
 
     } else {
       console.error("Սխալ:", response.data);
-      alert("Սխալ: " + (response.data.errors?.mnemonics?.[0]));
+      console.log("Սխալ: " + (response.data.errors?.mnemonics?.[0]));
     } 
     
   } catch (error) {
