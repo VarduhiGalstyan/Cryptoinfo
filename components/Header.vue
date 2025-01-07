@@ -67,11 +67,11 @@
                       {{$t( "enter" )}}
                     </button>
                     <div v-else>
-                      <a @click="viewAccount" class="account-button">
+                      <p><a @click="viewAccount" class="account-button">
                         {{$t( "account" )}}
-                      </a>
+                      </a></p>
                       <a @click="logout" class="logout-button">
-                        {{$t( "ogout" )}}
+                        {{$t( "logout" )}}
                       </a>
                     </div>
                   </div>
@@ -433,6 +433,7 @@ const handleSubmit2 = async () => {
   showError2.value = false;
 
   try {
+    // const response = await apiStore.registerUser(mnemonic2.value);
     const response = await axios.post(
       "https://api.cryptoinfo.me/api/register",
       {
@@ -458,6 +459,8 @@ const handleSubmit3 = async () => {
   try {
     console.log("Ուղարկվում է mnemonic:"+ mnemonic3.value); 
 
+    // const response = await apiStore.loginUser(mnemonic3.value);
+    
     const response = await axios.post(
       "https://api.cryptoinfo.me/api/login-user",
       {
@@ -465,6 +468,7 @@ const handleSubmit3 = async () => {
         api_key: "eCGo9bZjoxqGZW8h325LA3wlKV0vq01lIQ4w",
       }
     );   
+
     if (response.data.status === 200 && response.data.status_message === "true") {
       console.log("Հաջողություն:", response.data);
       console.log("Հաջողությամբ մուտք գործեցիք!");
