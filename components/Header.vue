@@ -291,12 +291,18 @@ const isRegistered = ref(false);
 const isRegistered3 = ref(false);
 
 const headerStyle = computed(() => {
-  if (isRegistered3.value) {
-    return {
-      background: `radial-gradient(50.31% 45.06% at 10.16% 91.73%, rgba(251, 21, 96, 0.08) 0, transparent 100%), 
-                   radial-gradient(59.34% 35.83% at 93.49% 46.73%, rgba(111, 17, 237, 0.2) 25.5%, transparent 100%), 
-                   linear-gradient(101deg, #16141f, #100f16)`,
-    };
+  if (isRegistered3.value ) {
+    if (isDarkTheme.value ) {
+      return {
+        background: `radial-gradient(50.31% 45.06% at 10.16% 91.73%, rgba(251, 21, 96, 0.08) 0, transparent 100%), 
+                    radial-gradient(59.34% 35.83% at 93.49% 46.73%, rgba(111, 17, 237, 0.2) 25.5%, transparent 100%), 
+                    linear-gradient(101deg, #16141f, #100f16)`,
+      };
+    }else{
+      return{
+        background: '#fff',
+      }
+    }
   }
   return {};
 });
@@ -999,6 +1005,9 @@ button .light-theme button,
 }
 .light-theme .button1 {
   background-color: #f5f3f3;
+}
+.light-theme header{
+  color: #000;
 }
 .max {
   padding-top: 40px;
