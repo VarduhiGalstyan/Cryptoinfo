@@ -6,7 +6,7 @@
       <meta name="keywords" :content="metaKeywords" />
       <link rel="icon" :href="faviconUrl" />
     </head>
-    <header>
+    <header :style="headerStyle">
       <div class="max">
         <div class="max-top">
           <div class="top2">
@@ -289,6 +289,17 @@ const showError2 = ref(false);
 const isRegisterMode = ref(false);
 const isRegistered = ref(false);
 const isRegistered3 = ref(false);
+
+const headerStyle = computed(() => {
+  if (isRegistered3.value) {
+    return {
+      background: `radial-gradient(50.31% 45.06% at 10.16% 91.73%, rgba(251, 21, 96, 0.08) 0, transparent 100%), 
+                   radial-gradient(59.34% 35.83% at 93.49% 46.73%, rgba(111, 17, 237, 0.2) 25.5%, transparent 100%), 
+                   linear-gradient(101deg, #16141f, #100f16)`,
+    };
+  }
+  return {};
+});
 
 const viewAccount = () => {
   console.log('Account details viewed');
@@ -691,7 +702,6 @@ option{
 }
 .overlay-text {
   color: #e01414;
-  /* padding-bottom: 10px; */
 }
 .overlay-name {
   color: #fefefe;
