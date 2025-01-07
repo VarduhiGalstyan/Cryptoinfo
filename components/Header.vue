@@ -433,22 +433,15 @@ const handleSubmit2 = async () => {
   showError2.value = false;
 
   try {
-    // const response = await apiStore.registerUser(mnemonic2.value);
-    const response = await axios.post(
-      "https://api.cryptoinfo.me/api/register",
-      {
-        login: mnemonic2.value, 
-        api_key: "eCGo9bZjoxqGZW8h325LA3wlKV0vq01lIQ4w",
-      }
-    );
+    const response = await apiStore.registerUser(mnemonic2.value);
 
-    if (response.data.status === 200) {
-      console.log("գրանցված է՝", response.data.user);
-      mnemonic3.value = response.data.user.mnemonics;
+    if (response.success) {
+      console.log("Գրանցված է՝", response.user);
+      mnemonic3.value = response.user.mnemonics;
       isRegistered.value = true; 
     } else {
-      console.error("Սխալկա՝", response.data.status_message);
-      console.log("Սխալ կա՝" + response.data.status_message);
+      console.error("Սխալկա՝", response.message);
+      console.log("Սխալ կա՝" + response.message);
     }
   } catch (error) {
     console.error("API-ի հարցման սխալ", error);

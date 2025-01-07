@@ -5,10 +5,11 @@ export const useApi = defineStore("api", {
     myHeader: null,
     myPost: [],
     myTgPost: [],
-    myProcess: null,
     isRegistered: false,
     mnemonic3: '',
     error: null,
+    userData: null,
+    header: {},
   }),
   actions: {
     async fetchData() {
@@ -30,6 +31,7 @@ export const useApi = defineStore("api", {
         console.error("Error fetching data:", error);
       }
     },
+
     async registerUser(mnemonic) {
       const apiURL = useRuntimeConfig().public.apiURL;
       const apiKey = useRuntimeConfig().public.apiKey;
@@ -60,6 +62,34 @@ export const useApi = defineStore("api", {
         this.error = error;
         console.error("API error:", error);
         return { success: false, message: 'API error occurred' };
+      }
+    },
+    async loginUser(mnemonic) {
+      const apiURL = useRuntimeConfig().public.apiURL;
+      const apiKey = useRuntimeConfig().public.apiKey;
+      try {
+          const response = await fetch(`${apiURL}/login-user`, 
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              mnemonics: mnemonic, 
+              api_key: apiKey,
+            }),       
+          }
+        );
+        if (response.data.status === 200 && response.data.status_message === "true") {
+          this.userData = response.data.user;
+          return { success: true, user: this.userData };
+        } else {
+          return { success: false, error: response.data.errors };
+        }
+      } catch (error) {
+        console.error("Error during API request:", error);
+        return { success: false, error: error.message };
       }
     },
     async fetchData3(state) {
