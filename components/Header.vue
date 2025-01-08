@@ -138,29 +138,59 @@
           <div class="buttons">
             <div class="button1">
               <div class="input">
-                <input type="number" v-model.number="secondInputt" @change="updateFirstInputt" />
+                <input 
+                  type="text" 
+                  v-model.number="secondInputt" 
+                  @input="updateFirstInputt" 
+                  inputmode="numeric"
+                  pattern="[0-9]*" 
+                  @keypress="allowOnlyNumbers"
+                />
               </div>
-              <nuxt-img
-                :src="cryptos.find(crypto => crypto.id === selectedCrypto)?.img"
-                alt="selected-crypto"
-                style=" width: 30px; height: 30px; margin-left: -10px;"
-              />  
-              <select v-model="selectedCrypto" @change="updateSecondInputt" >
-                <option v-for="crypto in cryptos" :key="crypto.id" :value="crypto.id" >
-                  {{ crypto.symbol }}
-                </option>
-              </select>
+              <div class="dropdown" @click="toggleCryptoDropdown">
+                <nuxt-img
+                  :src="cryptos.find(crypto => crypto.id === selectedCrypto)?.img"
+                  alt="selected-crypto"
+                  style="width: 30px; height: 30px; margin-left: -10px;"
+                />
+                <img src="/assets/img/arrow.svg" alt="flag" class="flag" />
+              </div>
+
+                <!-- <span class="crypto-symbol">{{ selectedCrypto.toUpperCase() }}</span> -->
+              <div v-if="showCryptoDropdown" class="dropdown-menu">
+                <div
+                  class="dropdown-item"
+                  v-for="crypto in cryptos"
+                  :key="crypto.id"
+                  @click="selectCrypto(crypto.id)"
+                >
+                  <nuxt-img :src="crypto.img" alt="logo" class="crypto-logo" style="width: 30px;" />
+                  <span class="crypto-name">{{ crypto.name }}</span>
+                  <span class="crypto-symbol">{{ crypto.symbol }}</span>
+                </div>
+              </div>
             </div>
 
             <div class="button1">
               <div class="input">
-                <input type="number" v-model.number="secondInputt2" @change="updateFirstInputt" />
+                <input type="text" 
+                  v-model.number="secondInputt2" 
+                  @input="updateFirstInputt"
+                  inputmode="numeric"
+                />
               </div>
-              <div class="bitcoin-logo" style="margin-left: 20px">
-                <select v-model="selectedCurrency" @change="updateSecondInputt">
-                  <option value="usd">$</option>
-                  <option value="rub">₽</option>
-                </select>
+              <div class="dropdown" @click="toggleCurrencyDropdown">
+                <span>{{ selectedCurrency === 'usd' ? '$' : '₽' }}</span>
+                <div v-if="showCurrencyDropdown" class="dropdown-menu">
+                  <div
+                    class="dropdown-item"
+                    v-for="currency in currencies"
+                    :key="currency"
+                    @click="selectCurrency(currency)"
+                  >
+                    {{ currency === 'usd' ? '$ USD' : '₽ RUB' }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -275,6 +305,9 @@ const {t, locale} = useI18n();
 const isOpen = ref(false);
 const isDarkTheme = ref(true);
 const showLanguageList = ref(false);
+const showCryptoDropdown = ref(false);
+const showCurrencyDropdown = ref(false);
+
 const selectedLanguage = ref("us");
 const showPopup = ref(false);
 const mnemonic = ref("");
@@ -319,7 +352,11 @@ const logout = () => {
 const personalData = ref({
   username: null,
 });
-
+const allowOnlyNumbers = (event) => {
+  if (!/[0-9]/.test(event.key)) {
+    event.preventDefault();
+  }
+};
 const openTopA = () => {
   isOpen.value = true;
 };
@@ -337,6 +374,7 @@ const cryptos = ref([
   { id: 'tron', name: 'Tron', symbol: 'TRX', img: 'tron-trx-logo.png', price: '' },
   { id: 'litecoin', name: 'Litecoin', symbol: 'LTC', img: 'litecoin-ltc-logo.png', price: '' },
 ]);
+const currencies = ref(["usd", "rub"]);
 
 const router = useRouter();
 
@@ -484,6 +522,24 @@ const updateSecondInputt = () => {
     secondInputt.value = (secondInputt2.value / price).toFixed(2);
   }
 };
+const toggleCryptoDropdown = () => {
+  showCryptoDropdown.value = !showCryptoDropdown.value;
+};
+
+const toggleCurrencyDropdown = () => {
+  showCurrencyDropdown.value = !showCurrencyDropdown.value;
+};
+const selectCrypto = (cryptoId) => {
+  selectedCrypto.value = cryptoId;
+  showCryptoDropdown.value = false;
+  updateFirstInputt();
+};
+
+const selectCurrency = (currency) => {
+  selectedCurrency.value = currency;
+  showCurrencyDropdown.value = false;
+};
+
 
 </script>
 
