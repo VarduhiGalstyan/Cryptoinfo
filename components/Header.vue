@@ -365,6 +365,8 @@ onMounted(() => {
   const savedTheme = localStorage.getItem("theme");
   isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; 
   document.body.className = themeClass.value; 
+  document.body.style.margin = '0px';
+
 });
 
 const apiStore = useApi();
@@ -487,9 +489,14 @@ const updateSecondInputt = () => {
 .personal p{
   font-weight: 1000;
 }
-
-@media screen and (max-width: 742px) {
-
+.overlay-name{
+    margin-top: 0;
+  }
+@media screen and (max-width: 744px) {
+  
+  .overlay-max1{
+    padding: 60px 2rem !important;
+  }
   .max-top{
     display: flex;
     flex-direction: column;
@@ -731,7 +738,7 @@ option{
   background: #1a1825;
   border-radius: 30px;
   box-shadow: 0 0 35px #00000026;
-  padding: 60px 2rem;
+  padding: 130px 152px;
 }
 .overlay {
   align-items: center;
@@ -1107,8 +1114,7 @@ button {
     padding-right: 16px;
   }
   .overlay-max1 {
-    padding: 130px 152px;
-  }
+    padding: 130px 152px;  }
 }
 @media screen and (min-width: 744px) {
   .loginmax,
@@ -1230,7 +1236,6 @@ button {
   background: #1a1825;
   border-radius: 30px;
   box-shadow: 0 0 35px #00000026;
-  padding: 60px 2rem;
 }
 .overlay {
   align-items: center;
@@ -1551,7 +1556,7 @@ button {
     padding-right: 16px;
   }
   .overlay-max1 {
-    padding: 130px 152px;
+    padding: 130px 152px !important;
   }
 }
 @media screen and (min-width: 744px) {
