@@ -366,6 +366,10 @@ onMounted(() => {
   document.body.className = isDarkTheme.value ? "dark-theme" : "light-theme";  
   document.body.style.margin = '0px';
 
+  const savedLanguage = localStorage.getItem("language");
+  selectedLanguage.value = savedLanguage ? savedLanguage : "ru";
+  locale.value = selectedLanguage.value;
+
 });
 
 const apiStore = useApi();
@@ -389,6 +393,7 @@ const toggleLanguageList = () => {
 
 const selectLanguage = (language) => {
   selectedLanguage.value = language;
+    localStorage.setItem("language", language); 
   showLanguageList.value = false;
 
   const locale = language;
