@@ -407,20 +407,20 @@ const handleSubmit = async () => {
   showError.value = mnemonic.value === "";
   if (mnemonic3.value !== "") {
     try {
-      const response = await axios.get(
-        'https://api.cryptoinfo.me/api/login-user');
-      if (response.data.user.login !== "") {
-        personalData.value.username = response.data.user.login;
+      const response = await apiStore.loginUser(mnemonic3.value);
+
+      if (response.success) {
+        personalData.value.username = response.user.login;
+        isRegistered3.value = true;   
+        showPopup.value = false;  
       } else {
         showError.value = true; 
-        console.error('Login data not found');
+        console.error('Login error:', response.message);
       }
     } catch (error) {
       showError.value = true; 
       console.error('API error:', error);
     }
-    isRegistered3.value = true;   
-    showPopup.value = false;  
   } else {
     showError.value = true;       
   }
