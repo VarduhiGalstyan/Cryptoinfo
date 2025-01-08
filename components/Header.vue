@@ -362,14 +362,9 @@ onMounted(fetchCryptoPrices);
 onMounted(() => { 
   const savedTheme = localStorage.getItem("theme");
   isDarkTheme.value = savedTheme ? savedTheme === "dark" : true; 
-  document.body.className =  isDarkTheme.value ? "dark-theme" : "light-theme"; 
+  // document.body.className = themeClass.value;
+  document.body.className = isDarkTheme.value ? "dark-theme" : "light-theme";  
   document.body.style.margin = '0px';
-
-  const savedLanguage = localStorage.getItem("language");
-  selectedLanguage.value = savedLanguage ? savedLanguage : "ru";
-  locale.value = selectedLanguage.value;
-  languageFlag.value = selectedLanguage.value === "ru" ? "ru.svg" : "us.svg";
-
 
 });
 
@@ -394,11 +389,8 @@ const toggleLanguageList = () => {
 
 const selectLanguage = (language) => {
   selectedLanguage.value = language;
-  localStorage.setItem("language", language);
   showLanguageList.value = false;
-  locale.value = language;
-  languageFlag.value = language === "ru" ? "ru.svg" : "us.svg";
-  router.push(language);
+
   const locale = language;
   router.push(locale);
 };
