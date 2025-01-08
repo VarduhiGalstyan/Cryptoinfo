@@ -64,11 +64,11 @@ export const useApi = defineStore("api", {
         return { success: false, message: 'API error occurred' };
       }
     },
-    async loginUser(mnemonic) {
+    async loginUser(mnemonicc) {
       const apiURL = useRuntimeConfig().public.apiURL;
       const apiKey = useRuntimeConfig().public.apiKey;
       try {
-          const response = await fetch(`${apiURL}/login-user`, 
+        const response = await fetch(`${apiURL}/login-user`, 
           {
             method: "POST",
             headers: {
@@ -76,22 +76,26 @@ export const useApi = defineStore("api", {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              mnemonics: mnemonic, 
+              mnemonics: mnemonicc,
               api_key: apiKey,
-            }),       
+            }), 
           }
         );
-        if (response.data.status === 200 && response.data.status_message === "true") {
-          this.userData = response.data.user;
-          return { success: true, user: this.userData };
+        const data = await response.json();
+        if (response.ok) {
+          this.userData = data.user;
+          return { success: true, user: data.user };
         } else {
-          return { success: false, error: response.data.errors };
+          this.error = data.message || "Login failed.";
+          return { success: false, message: this.error };
         }
       } catch (error) {
-        console.error("Error during API request:", error);
-        return { success: false, error: error.message };
+        this.error = error.message || "Login error.";
+        console.error("Error logging in:", error);
+        return { success: false, message: "Login error occurred" };
       }
     },
+    
     async fetchData3(state) {
       try {
         const response = await fetch(`${useRuntimeConfig().public.apiURL + "/get-crypto-posts?offset="}${state}&limit=10`, {

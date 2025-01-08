@@ -450,32 +450,19 @@ const handleSubmit2 = async () => {
 
 const handleSubmit3 = async () => {
   try {
-    console.log("Ուղարկվում է mnemonic:"+ mnemonic3.value); 
-
-    // const response = await apiStore.loginUser(mnemonic3.value);
-    
-    const response = await axios.post(
-      "https://api.cryptoinfo.me/api/login-user",
-      {
-        mnemonics: mnemonic3.value, 
-        api_key: "eCGo9bZjoxqGZW8h325LA3wlKV0vq01lIQ4w",
-      }
-    );   
-
-    if (response.data.status === 200 && response.data.status_message === "true") {
-      console.log("Հաջողություն:", response.data);
-      console.log("Հաջողությամբ մուտք գործեցիք!");
-      isRegistered3.value = true; 
-      showPopup.value = false; 
+    const response = await apiStore.loginUser(mnemonic3.value);
+    if (response.success) {
       personalData.value.username = mnemonic2.value;
-
+      isRegistered3.value = true; 
+      showPopup.value = false;    
+      console.log("Login successful:", response.user);
     } else {
-      console.error("Սխալ:", response.data);
-      console.log("Սխալ: " + (response.data.errors?.mnemonics?.[0]));
-    } 
-    
+      showError.value = true;
+      console.error("Login error:", response.message);
+    }
   } catch (error) {
-    console.error("Error making the request:", error);
+    showError.value = true;
+    console.error("API error:", error);
   }
 };
 
