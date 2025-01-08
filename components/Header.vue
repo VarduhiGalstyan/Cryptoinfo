@@ -308,13 +308,12 @@ const headerStyle = computed(() => {
 });
 
 const viewAccount = () => {
-  console.log('Account details viewed');
+  // console.log('Account details viewed');
 };
 
 const logout = () => {
   isRegistered3.value = false;  
   personalData.value.username = null; 
-  console.log('Դուք դուրս եկաք համակարգից');
 };
 
 const personalData = ref({
@@ -344,7 +343,6 @@ const router = useRouter();
 const fetchCryptoPrices = async () => {
   try {
     const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,monero,ethereum,tron,litecoin,tether&vs_currencies=usd');
-    console.log('coins',cryptos);
     cryptos.value.forEach(crypto => {
       if (response.data[crypto.id]) {
         crypto.price= response.data[crypto.id].usd;
@@ -438,12 +436,10 @@ const handleSubmit2 = async () => {
     const response = await apiStore.registerUser(mnemonic2.value);
 
     if (response.success) {
-      console.log("Գրանցված է՝", response.user);
       mnemonic3.value = response.user.mnemonics;
       isRegistered.value = true; 
     } else {
       console.error("Սխալկա՝", response.message);
-      console.log("Սխալ կա՝" + response.message);
     }
   } catch (error) {
     console.error("API-ի հարցման սխալ", error);
@@ -457,7 +453,6 @@ const handleSubmit3 = async () => {
       personalData.value.username = mnemonic2.value;
       isRegistered3.value = true; 
       showPopup.value = false;    
-      console.log("Login successful:", response.user);
     } else {
       showError.value = true;
       console.error("Login error:", response.message);

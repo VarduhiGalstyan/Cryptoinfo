@@ -188,10 +188,14 @@ export default {
 .light-theme .eye-number,
 .light-theme .title{
    color: #0c0c0c;
+   font-family: Golos, sans-serif;
 }
+
 
 .card1-text{
    color: #d0d0d0;
+   font-family: Golos, sans-serif;
+
 }
 .eye-number{
    color: #d0d0d0;
@@ -347,7 +351,6 @@ export default {
     padding: 0 16px 0 6px;
     text-overflow: ellipsis;
     text-wrap: wrap;
-    -webkit-line-clamp: 10;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -359,7 +362,6 @@ export default {
     line-height: normal;
     padding: 5px 16px 0 6px;
     text-wrap: wrap;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 .views-number{

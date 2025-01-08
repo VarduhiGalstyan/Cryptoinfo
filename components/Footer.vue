@@ -37,7 +37,7 @@ const { t, locale } = useI18n();
 const api = useApi(); 
 await api.fetchData();
 const apiFooter = api.myHeader.setting;
-console.log(apiFooter);
+// console.log(apiFooter);
 
 
 
