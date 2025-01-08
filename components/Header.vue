@@ -147,26 +147,26 @@
                   @keypress="allowOnlyNumbers"
                 />
               </div>
-              <div class="dropdown" @click="toggleCryptoDropdown">
-                <nuxt-img
-                  :src="cryptos.find(crypto => crypto.id === selectedCrypto)?.img"
-                  alt="selected-crypto"
-                  style="width: 30px; height: 30px; margin-left: -10px;"
-                />
-                <img src="/assets/img/arrow.svg" alt="flag" class="flag" />
-              </div>
-
-                <!-- <span class="crypto-symbol">{{ selectedCrypto.toUpperCase() }}</span> -->
-              <div v-if="showCryptoDropdown" class="dropdown-menu">
-                <div
-                  class="dropdown-item"
-                  v-for="crypto in cryptos"
-                  :key="crypto.id"
-                  @click="selectCrypto(crypto.id)"
-                >
-                  <nuxt-img :src="crypto.img" alt="logo" class="crypto-logo" style="width: 30px;" />
-                  <span class="crypto-name">{{ crypto.name }}</span>
-                  <span class="crypto-symbol">{{ crypto.symbol }}</span>
+              <div style="display: flex; flex-direction: column;">
+                <div class="dropdown" @click="toggleCryptoDropdown">
+                  <nuxt-img
+                    :src="cryptos.find(crypto => crypto.id === selectedCrypto)?.img"
+                    alt="selected-crypto"
+                    style="width: 30px; height: 30px; margin-left: -10px;"
+                  />
+                  <img src="/assets/img/arrow.svg" alt="flag" class="flag" />
+                </div>
+                <div v-if="showCryptoDropdown" class="dropdown-menu">
+                  <div
+                    class="dropdown-item"
+                    v-for="crypto in cryptos"
+                    :key="crypto.id"
+                    @click="selectCrypto(crypto.id)"
+                  >
+                    <nuxt-img :src="crypto.img" alt="logo" class="crypto-logo" style="width: 30px;" />
+                    <span class="crypto-name">{{ crypto.name }}</span>
+                    <span class="crypto-symbol">{{ crypto.symbol }}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -175,20 +175,25 @@
               <div class="input">
                 <input type="text" 
                   v-model.number="secondInputt2" 
-                  @input="updateFirstInputt"
+                  @input="updateSecondInputt"
                   inputmode="numeric"
+                  pattern="[0-9]*" 
+                  @keypress="allowOnlyNumbers"
                 />
               </div>
-              <div class="dropdown" @click="toggleCurrencyDropdown">
-                <span>{{ selectedCurrency === 'usd' ? '$' : '₽' }}</span>
-                <div v-if="showCurrencyDropdown" class="dropdown-menu">
+              <div style="display: flex; flex-direction: column;">
+                <div class="dropdown" @click="toggleCurrencyDropdown">
+                  <span>{{ selectedCurrency === 'usd' ? '$' : '₽' }}</span>
+                  <img src="/assets/img/arrow.svg" alt="flag" class="flag" />
+                </div>
+                <div v-if="showCurrencyDropdown" class="dropdown-menu2">
                   <div
-                    class="dropdown-item"
+                    class="dropdown-item2"
                     v-for="currency in currencies"
                     :key="currency"
                     @click="selectCurrency(currency)"
                   >
-                    {{ currency === 'usd' ? '$ USD' : '₽ RUB' }}
+                    {{ currency === 'usd' ? '$' : '₽' }}
                   </div>
                 </div>
               </div>
@@ -538,12 +543,62 @@ const selectCrypto = (cryptoId) => {
 const selectCurrency = (currency) => {
   selectedCurrency.value = currency;
   showCurrencyDropdown.value = false;
+  updateSecondInputt();
+
 };
 
 
 </script>
 
 <style scoped>
+.dropdown-menu{
+  display: flex;
+   gap: 18px;
+  right: 600px !important;
+  top: calc(100% + 25px);
+  align-items: flex-start;
+    background: #301c44;
+    border-radius: 11px;
+    display: flex;
+    /* display: none; */
+     flex-direction: column; 
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    width: -moz-max-content;
+    width: max-content;
+    z-index: 1111;
+    box-sizing: border-box; 
+}
+.dropdown-menu2{
+  display: flex;
+   gap: px;
+  right: 350px !important;
+  top: calc(100% + 25px);
+  align-items: flex-start;
+    background: #301c44;
+    border-radius: 11px;
+    display: flex;
+     flex-direction: column; 
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 20px;
+    padding-top: 30px;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    width: -moz-max-content;
+    width: max-content;
+    z-index: 1111;
+    box-sizing: border-box; 
+    /* height: 100px; */
+}
+.dropdown-item2{
+  margin-bottom: 15px !important;
+}
 .personal p{
   font-weight: 1000;
 }
